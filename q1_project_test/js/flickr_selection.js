@@ -43,6 +43,10 @@ function organizePhotoData(photos) {
 }
 
 function selectPhoto(selection) {
-  console.log(selection);
-  
+  //NOTE should this be a global var? It's being queried from organizePhotoData
+  var photoContainer = $(".container");
+
+  // Clear image container
+  $(photoContainer.children().remove());
+  photoContainer.append(selection);
 }

@@ -7,13 +7,12 @@ Your application can cache API results and images for up to 24 hrs to help reduc
 
 Flickr api no no s
 Display more than 30 Flickr user photos per page in your application or use an unreasonable amount of bandwidth.
-
-Flickr API Key Info
+The Internet Says Hello
 Key:
-c0702725b8e793ac7244ed4c00d447e4
+895b279df6ecc35b1e91b50a62dd8d4f
 
 Secret:
-61e7afb57389cf0d
+83f0d34f866f2c4e
 
 Flickr API documentation: https://www.flickr.com/services/api/
 

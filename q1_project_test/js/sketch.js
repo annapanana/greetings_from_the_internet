@@ -35,26 +35,18 @@ function draw() {
 
 function mouseClicked() {
   console.log("clicked");
+  // saveCanvas('myCanvas', 'jpg');
   $.ajax({
-    // type: "POST",
-    // url: 'https://api.lob.com/v1/addresses/test_97f0caa8c52f230f7bef2daef8b58e70f81',
-    // data: {
-    //   "id": "adr_f4540ef741dd2b23",
-    //   "description": null,
-    //   "name": "Anna Lotko",
-    //   "company": null,
-    //   "phone": null,
-    //   "email": null,
-    //   "address_line1": "1260 Blala Avenue",
-    //   "address_line2": "Unit 15",
-    //   "address_city": "Smolder",
-    //   "address_state": "Colorado",
-    //   "address_zip": "80304",
-    //   "address_country": "United States",
-    //   "metadata": {},
-    //   "date_created": "2016-10-28T21:25:23.688Z",
-    //   "date_modified": "2016-10-28T21:25:23.688Z",
-    //   "object": "address"
-    // },
+    type: "POST",
+    url: 'https://g-lob.herokuapp.com/v1/addresses/test_97f0caa8c52f230f7bef2daef8b58e70f81',
+    data: {
+      name: "Anna Lotko",
+      address_line1: "1260 Blala Avenue",
+      address_line2: "Unit 15",
+      address_city: "Smolder",
+      address_state: "Colorado",
+      address_zip: "80304",
+      address_country: "United States",
+    },
   });
 }

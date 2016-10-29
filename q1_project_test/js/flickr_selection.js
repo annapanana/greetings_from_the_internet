@@ -13,6 +13,7 @@ $(function() {
 
 function searchFlickr(keyword) {
   // https://www.flickr.com/services/api/flickr.photos.search.html
+  
   var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=1&format=json&nojsoncallback=1');
   $xhr.done(function(data) {
     console.log(data);

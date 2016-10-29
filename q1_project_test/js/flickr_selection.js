@@ -1,10 +1,15 @@
 "use strict";
 
 var photoCollection = {} // photo ID as key, flickr path as value
+var numOfLetters = 0;
+var currentPhotoCount = 0;
+var searchText = "";
 
 $(function() {
   $('#search_button').on('click', function() {
-    searchFlickr($('#search_criteria').val());
+    searchText = $('#search_criteria').val();
+    searchFlickr(searchText);
+    updateHeader(searchText);
   });
 
   // var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=38bd8b2ec53acd8812a8d2069711cfd9&text=boulder&safe_search=&per_page=10&page=1&format=json&nojsoncallback=1&auth_token=72157674342124442-e0b7aa6293be6535&api_sig=ba7bf20c1fac7280ce3af9c910e31e31');
@@ -13,7 +18,7 @@ $(function() {
 
 function searchFlickr(keyword) {
   // https://www.flickr.com/services/api/flickr.photos.search.html
-  
+
   var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=1&format=json&nojsoncallback=1');
   $xhr.done(function(data) {
     console.log(data);
@@ -50,14 +55,28 @@ function organizePhotoData(photos) {
   });
 }
 
+function updateHeader(word) {
+  for (var i = 0; i < word.length; i++) {
+    numOfLetters+=1;
+  }
+  var newHeader = "<h3>Select " + numOfLetters + " photos</h3>"
+  $("#search").append(newHeader);
+}
+
+
 function selectPhoto(selection) {
 
   // Get the name of the target element to reference in the main photo collection object
   var keyOfSelected = $(selection).attr("name");
-
+  // Set the name of the photo to be unique using the photo count
+  var keyName = "image_selection" + currentPhotoCount;
   // store the photo object in local storage
-  localStorage.setItem("image_selection", JSON.stringify(photoCollection[keyOfSelected]));
+  localStorage.setItem(keyName, JSON.stringify(photoCollection[keyOfSelected]));
+  currentPhotoCount++;
 
-  // load canvas page and initialize in canvas_composition.js
-  location.assign("composition.html");
+  if (currentPhotoCount === numOfLetters) {
+    localStorage.setItem("text", JSON.stringify(searchText));
+    // load canvas page and initialize in canvas_composition.js
+    location.assign("composition.html");
+  }
 }

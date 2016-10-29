@@ -1,13 +1,22 @@
 "use strict";
 
-var img;
-var imageMask;
+var img = [];
+var imageMask = [];
+
 function preload() {
-  var selectedImageURL = localStorage.getItem("image_selection");
-  var selectedImageURL = JSON.parse(selectedImageURL);
-  console.log(selectedImageURL);
-  img = loadImage(selectedImageURL, imageLoaded());
-  imageMask = loadImage("img/letter_test.svg", imageLoaded());
+  var text = localStorage.getItem("text");
+  var text = JSON.parse(text);
+  console.log(text);
+
+  for (var i = 0; i < text.length; i++) {
+    var selectedImageURL = localStorage.getItem("image_selection"+i);
+    var selectedImageURL = JSON.parse(selectedImageURL);
+    console.log(selectedImageURL);
+    var thisImage = loadImage(selectedImageURL, imageLoaded());
+    img.push(thisImage);
+    // var thisLetter =loadImage("img/upper_" + text[i] + ".svg");
+    // console.log(text[i]);
+  }
 }
 
 function imageLoaded() {
@@ -18,8 +27,8 @@ function setup() {
   // createCanvas(1875, 1275);
   createCanvas(800, 600);
   background('#d3d3d3');
-  img.mask(imageMask);
-  image(img, 0, 0, 300, 300);
+  // img[0].mask(imageMask[0]);
+  image(img[0], 0, 0, 300, 300);
 }
 
 function draw() {

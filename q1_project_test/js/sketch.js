@@ -14,8 +14,8 @@ function preload() {
     console.log(selectedImageURL);
     var thisImage = loadImage(selectedImageURL, imageLoaded());
     img.push(thisImage);
-    // var thisLetter =loadImage("img/upper_" + text[i] + ".svg");
-    // console.log(text[i]);
+    var thisLetter =loadImage("img/upper_" + text[i] + ".svg");
+    console.log(text[i]);
   }
 }
 
@@ -27,7 +27,7 @@ function setup() {
   // createCanvas(1875, 1275);
   createCanvas(800, 600);
   background('#d3d3d3');
-  // img[0].mask(imageMask[0]);
+  img[0].mask(imageMask[0]);
   image(img[0], 0, 0, 300, 300);
 }
 

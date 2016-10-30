@@ -1,19 +1,11 @@
 "use strict";
 
-var photoCollection = {} // photo ID as key, flickr path as value
-var numOfLetters = 0;
-var currentPhotoCount = 0;
-var searchText = "";
+var photoManager;
 
 $(function() {
   $('#search_button').on('click', function() {
-    searchText = $('#search_criteria').val();
-    searchFlickr(searchText);
-    updateHeader(searchText);
+    searchFlickr($('#search_criteria').val());
   });
-
-  // var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=38bd8b2ec53acd8812a8d2069711cfd9&text=boulder&safe_search=&per_page=10&page=1&format=json&nojsoncallback=1&auth_token=72157674342124442-e0b7aa6293be6535&api_sig=ba7bf20c1fac7280ce3af9c910e31e31');
-
 });
 
 function searchFlickr(keyword) {
@@ -28,7 +20,7 @@ function searchFlickr(keyword) {
 
 function organizePhotoData(photos) {
   var photoContainer = $(".container");
-
+  var photoCollection = {}; // This only holds the photo name and URL
   var photoData = {}; // A temporary object to hold ALL data from Flickr
   // Clear image container
   $(photoContainer.children().remove());
@@ -49,34 +41,101 @@ function organizePhotoData(photos) {
     photoCollection[keyString] = photoData[keyString][0].src;
   }
 
+  // initialize photo manager and pass it all of the photos pulled from flickr
+  photoManager = setPhotos(photoCollection, $('#search_criteria').val());
+
   // Add an event listener to each photo to see if the user will select it
   $('.photo_option').on('click', function() {
-    selectPhoto(event.target)
+    photoManager.checkPhotoStatus(event.target);
   });
 }
 
-function updateHeader(word) {
-  for (var i = 0; i < word.length; i++) {
-    numOfLetters+=1;
-  }
-  var newHeader = "<h3>Select " + numOfLetters + " photos</h3>"
-  $("#search").append(newHeader);
+function setPhotos(allPhotos, text) {
+  var selectedPhotos = [];
+  var currentPhotoCount = 0;
+  var photoCollection = allPhotos;
+  var numOfLetters = 0;
+
+  // Set and initialize header text
+  var searchText = text;
+  var headerManager = headerData(searchText);
+  headerManager.updateHeaderText(headerManager.getRemainingLetterCount(selectedPhotos.length));
+
+  return {
+    // Add a photo to the collection
+    addPhoto: function(selection) {
+      // Get the name of the target element to reference in the main photo collection object
+      var keyOfSelected = $(selection).attr("name"); // this is p_[image ID from flickr]
+      console.log("adding photo " + keyOfSelected);
+      selectedPhotos.push(keyOfSelected);
+      // TODO change the state of the photo
+      // TODO update header
+      currentPhotoCount++;
+    },
+    // Remove a photo from the collection
+    removePhoto: function(selection) {
+      var keyOfSelected = $(selection).attr("name"); // this is p_[image ID from flickr]
+      console.log("removing photo " + keyOfSelected);
+      var index = selectedPhotos.indexOf(keyOfSelected);
+      selectedPhotos.splice(index, 1);
+      console.log(selectedPhotos);
+      // TODO change the state of the photo
+      // TODO update header
+      currentPhotoCount--;
+    },
+    // Check to see if the user has selected enough photos
+    submitPhotos: function() {
+      for (var i = 0; i < selectedPhotos.length; i++) {
+        var keyName = "image_selection" + i;
+        // store the photo object in local storage
+        localStorage.setItem(keyName, JSON.stringify(photoCollection[selectedPhotos[i]]));
+        localStorage.setItem("text", JSON.stringify(searchText));
+        // load canvas page and initialize in canvas_composition.js
+        location.assign("composition.html");
+      }
+    },
+    checkPhotoStatus: function(selection) {
+      // If the photo is selected, remove if not add it
+      if (selectedPhotos.length > 0) {
+        // TODO Bug: because the selected photos arr is getting updated in the for loop, photos are removed immadiately after they are added
+        for (var i = 0; i < selectedPhotos.length; i++) {
+          if (selectedPhotos[i] === $(selection).attr("name")) {
+            photoManager.removePhoto(selection);
+          } else {
+            photoManager.addPhoto(selection);
+          }
+        }
+      } else {
+        photoManager.addPhoto(selection);
+      }
+
+      if (currentPhotoCount === numOfLetters) {
+        // TODO enable submit button
+        // TODO prevent the user from adding a photo
+        photoManager.submitPhotos();
+      }
+    }
+  };
 }
 
+function headerData(text) {
+  var letterCount = 0;
+  var searchText = text;
 
-function selectPhoto(selection) {
-
-  // Get the name of the target element to reference in the main photo collection object
-  var keyOfSelected = $(selection).attr("name");
-  // Set the name of the photo to be unique using the photo count
-  var keyName = "image_selection" + currentPhotoCount;
-  // store the photo object in local storage
-  localStorage.setItem(keyName, JSON.stringify(photoCollection[keyOfSelected]));
-  currentPhotoCount++;
-
-  if (currentPhotoCount === numOfLetters) {
-    localStorage.setItem("text", JSON.stringify(searchText));
-    // load canvas page and initialize in canvas_composition.js
-    location.assign("composition.html");
+  // set the initial letter count
+  for (var i = 0; i < searchText.length; i++) {
+    letterCount+=1;
   }
+  return {
+    getTotalLetterCount: function() {
+      return letterCount;
+    },
+    getRemainingLetterCount: function(numOfSelectedPhotos) {
+      return letterCount - numOfSelectedPhotos;
+    },
+    updateHeaderText: function(displayNum) {
+      var newHeader = "<h3>Select " + displayNum + " photos</h3>";
+      $("#search").append(newHeader);
+    }
+  };
 }

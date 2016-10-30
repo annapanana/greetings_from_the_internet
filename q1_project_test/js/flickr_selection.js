@@ -13,7 +13,6 @@ function searchFlickr(keyword) {
 
   var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=1&format=json&nojsoncallback=1');
   $xhr.done(function(data) {
-    console.log(data);
     organizePhotoData(data.photos.photo);
   });
 }
@@ -59,7 +58,7 @@ function setPhotos(allPhotos, text) {
   // Set and initialize header text
   var searchText = text;
   var headerManager = headerData(searchText);
-  headerManager.updateHeaderText(headerManager.getRemainingLetterCount(selectedPhotos.length));
+  headerManager.updateHeaderText(selectedPhotos.length);
 
   return {
     // Add a photo to the collection
@@ -69,7 +68,7 @@ function setPhotos(allPhotos, text) {
       console.log("adding photo " + keyOfSelected);
       selectedPhotos.push(keyOfSelected);
       // TODO change the state of the photo
-      // TODO update header
+      headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount++;
     },
     // Remove a photo from the collection
@@ -80,7 +79,7 @@ function setPhotos(allPhotos, text) {
       selectedPhotos.splice(index, 1);
       console.log(selectedPhotos);
       // TODO change the state of the photo
-      // TODO update header
+      headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount--;
     },
     // Check to see if the user has selected enough photos
@@ -108,7 +107,6 @@ function setPhotos(allPhotos, text) {
       } else {
         photoManager.addPhoto(selection);
       }
-
       if (currentPhotoCount === numOfLetters) {
         // TODO enable submit button
         // TODO prevent the user from adding a photo
@@ -127,15 +125,15 @@ function headerData(text) {
     letterCount+=1;
   }
   return {
-    getTotalLetterCount: function() {
+    getTotalLetterCount: function() { // not currently being used
       return letterCount;
     },
-    getRemainingLetterCount: function(numOfSelectedPhotos) {
+    getRemainingLetterCount: function(numOfSelectedPhotos) { // not currently being used
       return letterCount - numOfSelectedPhotos;
     },
-    updateHeaderText: function(displayNum) {
-      var newHeader = "<h3>Select " + displayNum + " photos</h3>";
-      $("#search").append(newHeader);
+    updateHeaderText: function(numOfSelectedPhotos) {
+      var header = $("#image_number").text("Select "+ (letterCount - numOfSelectedPhotos) + " photos");
+      console.log(header);
     }
   };
 }

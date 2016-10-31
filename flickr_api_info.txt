@@ -1,0 +1,20 @@
+ If your application stays under 3600 queries per hour across the whole key (which means the aggregate of all the users of your integration), you'll be fine. If we detect abuse on your key, we will need to expire the key, or turn it off, in order to preserve the Flickr API functionality for others (including us!). We also track usage on other factors as well to ensure no API user abuses the system.
+
+
+Search and localized calls take more CPU cycles than simple data lookups and so they may take more time to execute. Also, keep an eye out for the "extras" parameters availability in the API queries which may help reduce how many calls you need to make.
+
+Your application can cache API results and images for up to 24 hrs to help reduce API load
+
+Flickr api no no s
+Display more than 30 Flickr user photos per page in your application or use an unreasonable amount of bandwidth.
+The Internet Says Hello
+Key:
+895b279df6ecc35b1e91b50a62dd8d4f
+
+Secret:
+83f0d34f866f2c4e
+
+Flickr API documentation: https://www.flickr.com/services/api/
+
+Notes from: http://kylerush.net/blog/flickr-api/
+To send a request to Flickr, use the API methods to build a URL telling Flickr exactly what it is you want. All of the URLs start off with: http://api.flickr.com/services/rest/?

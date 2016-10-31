@@ -1,0 +1,45 @@
+/*font-family: 'Yellowtail', cursive;
+font-family: 'Lato', sans-serif;*/
+
+/*General*/
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+/*Nav*/
+.nav-custom {
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.brand-logo {
+  font-family: 'Yellowtail', cursive;
+  margin-left: 20px;
+}
+
+.footer-custom {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+/*Fonts*/
+/*p {
+  font-family: 'Lato', sans-serif;
+}*/
+
+h6 {
+  font-size: 18px;
+  line-height: 26px
+}
+
+.valign {
+  height: 100%;
+}

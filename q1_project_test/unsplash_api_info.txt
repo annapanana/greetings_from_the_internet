@@ -1,6 +1,0 @@
-Application ID c6c8b7f9803d19d55ce9626120f089e22bcb005b9903962b841bbbe1d75ca928
-Secret 91c2d2ee6845aafde0baee1790ee68a5210a83a3282678e440e120ed02ea8566
-Callback URLs
-urn:ietf:wg:oauth:2.0:oob (Authorize)
-Rate Limit by hour
-100 (100 requests remaining this hour)

@@ -85,7 +85,7 @@ function setPhotos(allPhotos, text) {
       var index = selectedPhotos.indexOf(keyOfSelected);
       selectedPhotos.splice(index, 1);
       // TODO change the state of the photo
-      $(selection).toggleClass(".selected-photo");
+      $(selection).toggleClass("selected-photo");
       headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount--;
     },
@@ -102,22 +102,12 @@ function setPhotos(allPhotos, text) {
     },
     checkPhotoStatus: function(selection) {
       // If the photo is selected, remove if not add it
-      if (selectedPhotos.length > 0) {
-        // var tempPhotoArray = [];
-        // for (var i = 0; i < selectedPhotos.length; i++) {
-        //   tempPhotoArray.push(selectedPhotos[i]);
-        // }
-        for (var j = 0; j < selectedPhotos.length; j++) {
-          if (selectedPhotos[j] === $(selection).attr("name")) {
-            photoManager.removePhoto(selection);
-            // return;
-          } else {
-            photoManager.addPhoto(selection);
-          }
-        }
+      if ($(selection).hasClass("selected-photo")) {
+        photoManager.removePhoto(selection);
       } else {
         photoManager.addPhoto(selection);
       }
+
       console.log(currentPhotoCount + " " + numOfLetters);
       if (currentPhotoCount === numOfLetters) {
         // TODO enable submit button

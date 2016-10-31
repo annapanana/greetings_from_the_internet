@@ -59,6 +59,8 @@ function setPhotos(allPhotos, text) {
   var searchText = text;
   var headerManager = headerData(searchText);
   headerManager.updateHeaderText(selectedPhotos.length);
+  headerManager.initializeHeader();
+  numOfLetters = headerManager.getTotalLetterCount();
 
   return {
     // Add a photo to the collection
@@ -96,10 +98,14 @@ function setPhotos(allPhotos, text) {
     checkPhotoStatus: function(selection) {
       // If the photo is selected, remove if not add it
       if (selectedPhotos.length > 0) {
-        // TODO Bug: because the selected photos arr is getting updated in the for loop, photos are removed immadiately after they are added
+        var tempPhotoArray = [];
         for (var i = 0; i < selectedPhotos.length; i++) {
-          if (selectedPhotos[i] === $(selection).attr("name")) {
+          tempPhotoArray.push(selectedPhotos[i]);
+        }
+        for (var i = 0; i < tempPhotoArray.length; i++) {
+          if (tempPhotoArray[i] === $(selection).attr("name")) {
             photoManager.removePhoto(selection);
+            return;
           } else {
             photoManager.addPhoto(selection);
           }
@@ -107,9 +113,11 @@ function setPhotos(allPhotos, text) {
       } else {
         photoManager.addPhoto(selection);
       }
+      console.log(currentPhotoCount + " " + numOfLetters);
       if (currentPhotoCount === numOfLetters) {
         // TODO enable submit button
         // TODO prevent the user from adding a photo
+        console.log("number reached");
         photoManager.submitPhotos();
       }
     }
@@ -120,11 +128,12 @@ function headerData(text) {
   var letterCount = 0;
   var searchText = text;
 
-  // set the initial letter count
-  for (var i = 0; i < searchText.length; i++) {
-    letterCount+=1;
-  }
   return {
+    initializeHeader: function() {
+      for (var i = 0; i < searchText.length; i++) {
+        letterCount+=1;
+      }
+    },
     getTotalLetterCount: function() { // not currently being used
       return letterCount;
     },

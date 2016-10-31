@@ -14,8 +14,9 @@ function preload() {
     console.log(selectedImageURL);
     var thisImage = loadImage(selectedImageURL, imageLoaded());
     img.push(thisImage);
-    var thisLetter =loadImage("img/upper_" + text[i] + ".svg");
-    console.log(text[i]);
+    // var thisLetter =loadImage("img/upper_" + text[i] + ".svg");
+    var thisLetter = loadImage("img/letter_test.svg");
+    imageMask.push(thisLetter);
   }
 }
 
@@ -29,12 +30,11 @@ function setup() {
   background('#d3d3d3');
   for (var i = 0; i < img.length; i++) {
     img[i].mask(imageMask[i]);
-    image(img[i], 0, 0, 300, 300);
+    image(img[i], 0, 0);
   }
 }
 
 function draw() {
-
 }
 
 function mouseClicked() {

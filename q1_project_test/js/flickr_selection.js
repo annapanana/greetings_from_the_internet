@@ -132,8 +132,7 @@ function headerData(text) {
       return letterCount - numOfSelectedPhotos;
     },
     updateHeaderText: function(numOfSelectedPhotos) {
-      var header = $("#image_number").text("Select "+ (letterCount - numOfSelectedPhotos) + " photos");
-      console.log(header);
+      $("#image_number").text("Select "+ (letterCount - numOfSelectedPhotos) + " photos");
     }
   };
 }

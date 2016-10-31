@@ -20,7 +20,6 @@
     <script src="js/flickr_selection.js" charset="utf-8" defer></script>
   </head>
   <body>
-
     <!-- Navbar -->
     <div class="navbar-fixed">
       <nav>
@@ -60,16 +59,26 @@
 
     <!-- This container is hidden until the user searches -->
     <div id="photo_container" class="container">
-      <div class="row">
-        <h4 id="image_number">Image Number Goes Here</h4>
+      <div class="row center">
+        <div class="col l3"><br></div>
+        <div class="col l2">
+          <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="col l2">
+          <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="col l2">
+          <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="col l3"><br></div>
       </div>
       <div class="row" id="card_columns">
         <!-- Columns are dynamically populated by search results -->
-        <div class="col l4">
+        <div class="col l2 photo-column">
         </div>
-        <div class="col l4">
+        <div class="col l2 photo-column">
         </div>
-        <div class="col l4">
+        <div class="col l2 photo-column">
         </div>
       </div>
     </div>

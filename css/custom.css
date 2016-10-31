@@ -37,3 +37,12 @@ h6 {
 .custom-spacer {
   min-height: 100px;
 }
+
+.selection-widget {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 500px;
+  z-index: 1;
+  border: solid;
+}

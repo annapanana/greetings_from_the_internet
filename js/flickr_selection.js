@@ -18,11 +18,9 @@ function searchFlickr(keyword) {
 }
 
 function organizePhotoData(photos, keyword) {
-  var photoContainer = $("#photo_container");
   var photoCollection = {}; // This only holds the photo name and URL
   var photoData = {}; // A temporary object to hold ALL data from Flickr
-  // Clear image container
-  $(photoContainer.children().remove());
+
   // Fill image container with new search results
   for (var i = 0; i < photos.length; i++) {
     // Documentation for building this string https://www.flickr.com/services/api/misc.urls.html
@@ -30,7 +28,6 @@ function organizePhotoData(photos, keyword) {
 
     // Build an HTML photo element
     var newPhoto = $('<img src="' + photoSource +  '" alt="' + photos[i].title +'" class="photo_option" name="'+ "p_" + photos[i].id + '">');
-    photoContainer.append(newPhoto);
 
     // Add this new photo to the temp object
     var keyString = "p_" + photos[i].id;
@@ -53,6 +50,9 @@ function setPhotos(allPhotos, text) {
   var currentPhotoCount = 0;
   var photoCollection = allPhotos;
   var numOfLetters = 0;
+
+  // Visually organize photo
+  photoLayout(allPhotos);
 
   // Set and initialize header text
   var searchText = text;
@@ -101,8 +101,8 @@ function setPhotos(allPhotos, text) {
         for (var i = 0; i < selectedPhotos.length; i++) {
           tempPhotoArray.push(selectedPhotos[i]);
         }
-        for (var i = 0; i < tempPhotoArray.length; i++) {
-          if (tempPhotoArray[i] === $(selection).attr("name")) {
+        for (var j = 0; j < tempPhotoArray.length; j++) {
+          if (tempPhotoArray[j] === $(selection).attr("name")) {
             photoManager.removePhoto(selection);
             return;
           } else {
@@ -143,4 +143,24 @@ function headerData(text) {
       $("#image_number").text("Select "+ (letterCount - numOfSelectedPhotos) + " photos");
     }
   };
+}
+
+function photoLayout(photos) {
+  var cardColumns = $("#card_columns").children();
+  var columnCounter = 0;
+
+  // // Clear columns
+  // for (var i = 0; i < cardColumns.length; i++) {
+  //   console.log($(cardColumns[i].children()));
+  //   // $(cardColumns[i].remove(cardColumns[i]).children());
+  // }
+  // Populate each column with new photos
+  for (let key in photos) {
+    var newDiv = '<div class="card"><div class="card-image"><img src="'+photos[key]+'"/></div></div>';
+    $(newDiv).appendTo(cardColumns[columnCounter]);
+    columnCounter++;
+    if (columnCounter === cardColumns.length) {
+      columnCounter = 0;
+    }
+  }
 }

@@ -59,13 +59,21 @@
     </div>
 
     <!-- This container is hidden until the user searches -->
-    <div class="container">
+    <div id="photo_container" class="container">
       <div class="row">
-        <div id="photo_container" class="photo-container">
-          <h4 id="image_number">Image Number Goes Here</h4>
+        <h4 id="image_number">Image Number Goes Here</h4>
+      </div>
+      <div class="row" id="card_columns">
+        <!-- Columns are dynamically populated by search results -->
+        <div class="col l4">
+        </div>
+        <div class="col l4">
+        </div>
+        <div class="col l4">
         </div>
       </div>
     </div>
+
     <!-- Footer -->
     <footer class="page-footer red">
       <div class="container">

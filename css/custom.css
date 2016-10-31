@@ -38,11 +38,14 @@ h6 {
   min-height: 100px;
 }
 
-.selection-widget {
+.circle-button {
+  width: 60%;
+  height: 60%;
   position: absolute;
-  top: 50%;
-  left: 20px;
-  width: 500px;
-  z-index: 1;
-  border: solid;
+  top: 20%;
+  left: 20%;
+}
+
+.selected-photo {
+  opacity: .5;
 }

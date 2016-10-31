@@ -4,14 +4,14 @@ var photoManager;
 
 $(function() {
   $('#search_button').on('click', function() {
-    searchFlickr($('#search_criteria').val());
+    searchFlickr($('#search_criteria').val(), 1);
   });
 });
 
-function searchFlickr(keyword) {
+function searchFlickr(keyword, page) {
   // https://www.flickr.com/services/api/flickr.photos.search.html
 
-  var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=1&format=json&nojsoncallback=1');
+  var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=' + page + '&format=json&nojsoncallback=1');
   $xhr.done(function(data) {
     organizePhotoData(data.photos.photo, keyword);
   });
@@ -43,6 +43,10 @@ function organizePhotoData(photos, keyword) {
   $('.photo-option').on('click', function() {
     photoManager.checkPhotoStatus(event.target);
   });
+
+  $('#refresh_button').on('click', function() {
+    photoManager.refreshPhotos();
+  });
 }
 
 function setPhotos(allPhotos, text) {
@@ -50,6 +54,7 @@ function setPhotos(allPhotos, text) {
   var currentPhotoCount = 0;
   var photoCollection = allPhotos;
   var numOfLetters = 0;
+  var currentPage = 1;
 
   // Visually organize photo
   photoLayout(allPhotos);
@@ -69,6 +74,7 @@ function setPhotos(allPhotos, text) {
       console.log("adding photo " + keyOfSelected);
       selectedPhotos.push(keyOfSelected);
       // TODO change the state of the photo
+      $(selection).toggleClass("selected-photo");
       headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount++;
     },
@@ -79,6 +85,7 @@ function setPhotos(allPhotos, text) {
       var index = selectedPhotos.indexOf(keyOfSelected);
       selectedPhotos.splice(index, 1);
       // TODO change the state of the photo
+      $(selection).toggleClass(".selected-photo");
       headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount--;
     },
@@ -96,14 +103,14 @@ function setPhotos(allPhotos, text) {
     checkPhotoStatus: function(selection) {
       // If the photo is selected, remove if not add it
       if (selectedPhotos.length > 0) {
-        var tempPhotoArray = [];
-        for (var i = 0; i < selectedPhotos.length; i++) {
-          tempPhotoArray.push(selectedPhotos[i]);
-        }
-        for (var j = 0; j < tempPhotoArray.length; j++) {
-          if (tempPhotoArray[j] === $(selection).attr("name")) {
+        // var tempPhotoArray = [];
+        // for (var i = 0; i < selectedPhotos.length; i++) {
+        //   tempPhotoArray.push(selectedPhotos[i]);
+        // }
+        for (var j = 0; j < selectedPhotos.length; j++) {
+          if (selectedPhotos[j] === $(selection).attr("name")) {
             photoManager.removePhoto(selection);
-            return;
+            // return;
           } else {
             photoManager.addPhoto(selection);
           }
@@ -118,6 +125,10 @@ function setPhotos(allPhotos, text) {
         console.log("number reached");
         photoManager.submitPhotos();
       }
+    },
+    refreshPhotos: function() {
+      currentPage++;
+      searchFlickr(searchText, currentPage);
     }
   };
 }
@@ -141,8 +152,8 @@ function headerData(text) {
     updateHeaderText: function(numOfSelectedPhotos) {
       $(".toast").remove();
       Materialize.toast("Select "+ (letterCount - numOfSelectedPhotos) + " photos");
-    }
-  };
+    },
+   };
 }
 
 function photoLayout(photos) {
@@ -152,7 +163,7 @@ function photoLayout(photos) {
 
   // Populate each column with new photos
   for (let key in photos) {
-    var newDiv = '<div class="card"><div class="card-image photo-option"><img src="'+photos[key]+'"/></div></div>';
+    var newDiv = '<div class="card"><div class="card-image photo-option"><img name="'+key+'" src="'+photos[key]+'"/></div></div>';
     $(newDiv).appendTo(cardColumns[columnCounter]);
     columnCounter++;
     if (columnCounter === cardColumns.length) {

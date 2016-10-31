@@ -24,12 +24,6 @@ body {
   margin-left: 20px;
 }
 
-.footer-custom {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-}
-
 /*Fonts*/
 /*p {
   font-family: 'Lato', sans-serif;
@@ -40,6 +34,6 @@ h6 {
   line-height: 26px
 }
 
-.valign {
-  height: 100%;
+.custom-spacer {
+  min-height: 100px;
 }

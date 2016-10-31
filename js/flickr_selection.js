@@ -13,12 +13,12 @@ function searchFlickr(keyword) {
 
   var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=1&format=json&nojsoncallback=1');
   $xhr.done(function(data) {
-    organizePhotoData(data.photos.photo);
+    organizePhotoData(data.photos.photo, keyword);
   });
 }
 
-function organizePhotoData(photos) {
-  var photoContainer = $(".container");
+function organizePhotoData(photos, keyword) {
+  var photoContainer = $("#photo_container");
   var photoCollection = {}; // This only holds the photo name and URL
   var photoData = {}; // A temporary object to hold ALL data from Flickr
   // Clear image container
@@ -41,8 +41,7 @@ function organizePhotoData(photos) {
   }
 
   // initialize photo manager and pass it all of the photos pulled from flickr
-  photoManager = setPhotos(photoCollection, $('#search_criteria').val());
-
+  photoManager = setPhotos(photoCollection, keyword);
   // Add an event listener to each photo to see if the user will select it
   $('.photo_option').on('click', function() {
     photoManager.checkPhotoStatus(event.target);

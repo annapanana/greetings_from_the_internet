@@ -15,8 +15,9 @@
     <script src="js/jquery-2.2.4.min.js"></script>
     <!-- Import Materialize Functionality -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!-- Import Custom Script -->
+    <!-- Import Custom Scripts -->
     <script src="js/interactivity.js" defer></script>
+    <script src="js/flickr_selection.js" charset="utf-8" defer></script>
   </head>
   <body>
 
@@ -34,36 +35,39 @@
 
     <!-- Main Body -->
     <div class="container">
-      <div class="valign-wrapper">
-        <div class="valign">
+      <div class="row custom-spacer"></div>
+      <div class="row">
+        <div class="col l2 s0"><br></div>
+        <div class="col l8 s12">
           <div class="row">
-            <div class="col l2 s0"><br></div>
             <div class="col l8 s12">
-              <div class="row">
-
-                <div class="col l8 s12 red">
-                  Search Bar
-                </div>
-                <div class="col l4 s12 blue">
-                  Search Button
-                </div>
-              </div>
-              <!-- <div class="row center">
-                <a href="search.html" class="waves-effect waves-light btn red">GET STARTED!</a>
-              </div> -->
+              <label for="search_criteria"></label>
+              <input type="text" id="search_criteria" name="search_criteria" value="colorado">
             </div>
-            <div class="col l2 s0"><br></div>
+            <div class="col l4 s12 center">
+              <a href="#" id="search_button" class="waves-effect waves-light btn red">search</a>
+            </div>
           </div>
-          <div class="row">
-            <h6>
-              Whatever mlkshk hella, listicle everyday carry PBRB chicharrones stumptown pug chillwave butcher typewriter lo-fi. Post-ironic thundercats roof party, schlitz next level vinyl la croix blue bottle small batch portland PBRB leggings letterpress. Small batch synth cronut tumblr.
-            </h6>
-          </div>
+        </div>
+        <div class="col l2 s0"><br></div>
+      </div>
+      <div class="row">
+        <h6>
+          Whatever mlkshk hella, listicle everyday carry PBRB chicharrones stumptown pug chillwave butcher typewriter lo-fi. Post-ironic thundercats roof party, schlitz next level vinyl la croix blue bottle small batch portland PBRB leggings letterpress. Small batch synth cronut tumblr.
+        </h6>
+      </div>
+    </div>
+
+    <!-- This container is hidden until the user searches -->
+    <div class="container">
+      <div class="row">
+        <div id="photo_container" class="photo-container">
+          <h4 id="image_number">Image Number Goes Here</h4>
         </div>
       </div>
     </div>
     <!-- Footer -->
-    <footer class="page-footer footer-custom red">
+    <footer class="page-footer red">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">

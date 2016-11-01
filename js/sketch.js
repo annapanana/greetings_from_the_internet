@@ -14,9 +14,8 @@ function preload() {
     console.log(selectedImageURL);
     var thisImage = loadImage(selectedImageURL, imageLoaded());
     img.push(thisImage);
-    // var thisLetter =loadImage("img/upper_" + text[i] + ".svg");
-    var thisLetter = loadImage("img/letter_test.svg");
-    imageMask.push(thisLetter);
+    // var thisLetter = loadImage("img/letter_test.svg");
+    // imageMask.push(thisLetter);
   }
 }
 
@@ -26,10 +25,11 @@ function imageLoaded() {
 
 function setup() {
   // createCanvas(1875, 1275);
-  createCanvas(800, 600);
+  var cnv = createCanvas(600, 400);
+  cnv.parent("cardCanvas");
   background('#d3d3d3');
   for (var i = 0; i < img.length; i++) {
-    img[i].mask(imageMask[i]);
+    // img[i].mask(imageMask[i]);
     image(img[i], 0, 0);
   }
 }

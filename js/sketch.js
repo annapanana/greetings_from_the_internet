@@ -2,25 +2,41 @@
 
 var img = [];
 var imageMask = [];
+var imageStroke = [];
+
 
 function preload() {
-  var text = localStorage.getItem("text");
-  var text = JSON.parse(text);
+  var postCardObject = localStorage.getItem("postcardTemplate");
+  postCardObject = JSON.parse(postCardObject);
+  var text = postCardObject["text"];
+  text = removeNonLetters(text);
   console.log(text);
 
   for (var i = 0; i < text.length; i++) {
-    var selectedImageURL = localStorage.getItem("image_selection"+i);
-    var selectedImageURL = JSON.parse(selectedImageURL);
-    console.log(selectedImageURL);
-    var thisImage = loadImage(selectedImageURL, imageLoaded());
-    img.push(thisImage);
-    // var thisLetter = loadImage("img/letter_test.svg");
-    // imageMask.push(thisLetter);
+      var selectedImageURL = localStorage.getItem("image_selection"+i);
+      var selectedImageURL = JSON.parse(selectedImageURL);
+      var thisImage = loadImage(selectedImageURL, imageLoaded());
+      img.push(thisImage);
+      var thisLetter = loadImage("assets/letters/"+text[i]+".svg");
+      imageMask.push(thisLetter);
+      var thisStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
+      imageStroke.push(thisStroke);
   }
 }
 
+function removeNonLetters(str) {
+  var newString = "";
+  for (var i = 0; i < str.length; i++) {
+    if (str[i].match(/[a-z]/i)) {
+      newString+=str[i];
+    }
+  }
+  // return str.length === 1 && str.match(/[a-z]/i);
+  return newString;
+}
+
 function imageLoaded() {
-  console.log("success!");
+  // console.log("success!");
 }
 
 function setup() {
@@ -28,9 +44,12 @@ function setup() {
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');
+  var xVal = 0;
   for (var i = 0; i < img.length; i++) {
-    // img[i].mask(imageMask[i]);
-    image(img[i], 0, 0);
+    img[i].mask(imageMask[i]);
+    image(img[i], xVal, 0, 150, 150);
+    image(imageStroke[i], xVal, 0, 150, 150);
+    xVal += 115;
   }
 }
 

@@ -28,13 +28,13 @@ function templateSelection(preview) {
       postcardTemplate.text = "Hello";
       break;
     case "pcard2":
-      postcardTemplate.text = "Guten Tag!";
+      postcardTemplate.text = "Guten Tag 1";
       break;
     case "pcard3":
       postcardTemplate.text = "Howdy";
       break;
     case "pcard4":
-      postcardTemplate.text = "Oh, Hello!";
+      postcardTemplate.text = "Oh2 Hello 1";
       break;
     case "pcard5":
       postcardTemplate.text = "Hey Friend";

@@ -1,10 +1,13 @@
 "use strict";
 
 var photoManager;
+var messageText = "";
 
 $(function() {
-  var postCardText = localStorage.getItem("postcardTemplate");
-  postCardText = JSON.parse(postCardText);
+  // TODO Hide image UI until the images have been loaded from Flickr
+  var cardObject = localStorage.getItem("postcardTemplate");
+  cardObject = JSON.parse(cardObject);
+  messageText = cardObject["text"];
   $('#search_button').on('click', function() {
     searchFlickr($('#search_criteria').val(), 1);
   });
@@ -50,7 +53,9 @@ function organizePhotoData(photos, searchText) {
     photoManager.refreshPhotos();
   });
 
-  return photoCollection;
+  $('#done_button').on('click', function() {
+    photoManager.checkSubmit();
+  })
 }
 
 function setPhotos(allPhotos, text) {
@@ -65,7 +70,7 @@ function setPhotos(allPhotos, text) {
 
   // Set and initialize header text
   var searchText = text;
-  var headerManager = headerData(searchText); // set to postcard text
+  var headerManager = headerData(searchText); //
   headerManager.initializeHeader();
   numOfLetters = headerManager.getTotalLetterCount();
   headerManager.updateHeaderText(selectedPhotos.length);
@@ -73,11 +78,12 @@ function setPhotos(allPhotos, text) {
   return {
     // Add a photo to the collection
     addPhoto: function(selection) {
+      // TODO Check if we have enough photos
       // Get the name of the target element to reference in the main photo collection object
       var keyOfSelected = $(selection).attr("name"); // this is p_[image ID from flickr]
       console.log("adding photo " + keyOfSelected);
       selectedPhotos.push(keyOfSelected);
-      // TODO change the state of the photo
+      // change the state of the photo
       $(selection).toggleClass("selected-photo");
       headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount++;
@@ -88,10 +94,11 @@ function setPhotos(allPhotos, text) {
       console.log("removing photo " + keyOfSelected);
       var index = selectedPhotos.indexOf(keyOfSelected);
       selectedPhotos.splice(index, 1);
-      // TODO change the state of the photo
+      // Change the state of the photo
       $(selection).toggleClass("selected-photo");
       headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount--;
+      // TODO if the user removes photos, disable the done button
     },
     // Check to see if the user has selected enough photos
     submitPhotos: function() {
@@ -111,12 +118,16 @@ function setPhotos(allPhotos, text) {
       } else {
         photoManager.addPhoto(selection);
       }
-
       console.log(currentPhotoCount + " " + numOfLetters);
+
       if (currentPhotoCount === numOfLetters) {
-        // TODO enable submit button
-        // TODO prevent the user from adding a photo
-        console.log("number reached");
+        // enable submit button
+        $("#done_button").toggleClass("disabled");
+        // TODO prevent the user from adding a photo if quota is filled
+      }
+    },
+    checkSubmit: function() {
+      if (currentPhotoCount === numOfLetters) {
         photoManager.submitPhotos();
       }
     },
@@ -127,14 +138,16 @@ function setPhotos(allPhotos, text) {
   };
 }
 
-function headerData(text) {
+function headerData() {
   var letterCount = 0;
-  var searchText = text;
-  console.log(text);
+  // var searchText = text;
+  // console.log(text);
   return {
     initializeHeader: function() {
-      for (var i = 0; i < searchText.length; i++) {
-        letterCount+=1;
+      for (var i = 0; i < messageText.length; i++) {
+        if (messageText[i] !== " "){
+          letterCount+=1;
+        }
       }
     },
     getTotalLetterCount: function() { // not currently being used

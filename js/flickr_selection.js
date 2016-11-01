@@ -3,21 +3,23 @@
 var photoManager;
 
 $(function() {
+  var postCardText = localStorage.getItem("postcardTemplate");
+  postCardText = JSON.parse(postCardText);
   $('#search_button').on('click', function() {
     searchFlickr($('#search_criteria').val(), 1);
   });
 });
 
-function searchFlickr(keyword, page) {
+function searchFlickr(searchText, page) {
   // https://www.flickr.com/services/api/flickr.photos.search.html
 
-  var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+keyword+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=' + page + '&format=json&nojsoncallback=1');
+  var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=895b279df6ecc35b1e91b50a62dd8d4f&tags='+searchText+'&safe_search=true&has_geo=true&content_type=1&per_page=30&page=' + page + '&format=json&nojsoncallback=1');
   $xhr.done(function(data) {
-    organizePhotoData(data.photos.photo, keyword);
+    organizePhotoData(data.photos.photo, searchText);
   });
 }
 
-function organizePhotoData(photos, keyword) {
+function organizePhotoData(photos, searchText) {
   var photoCollection = {}; // This only holds the photo name and URL
   var photoData = {}; // A temporary object to hold ALL data from Flickr
 
@@ -38,7 +40,7 @@ function organizePhotoData(photos, keyword) {
   }
 
   // initialize photo manager and pass it all of the photos pulled from flickr
-  photoManager = setPhotos(photoCollection, keyword);
+  photoManager = setPhotos(photoCollection, searchText);
   // Add an event listener to each photo to see if the user will select it
   $('.photo-option').on('click', function() {
     photoManager.checkPhotoStatus(event.target);
@@ -47,6 +49,8 @@ function organizePhotoData(photos, keyword) {
   $('#refresh_button').on('click', function() {
     photoManager.refreshPhotos();
   });
+
+  return photoCollection;
 }
 
 function setPhotos(allPhotos, text) {
@@ -61,7 +65,7 @@ function setPhotos(allPhotos, text) {
 
   // Set and initialize header text
   var searchText = text;
-  var headerManager = headerData(searchText);
+  var headerManager = headerData(searchText); // set to postcard text
   headerManager.initializeHeader();
   numOfLetters = headerManager.getTotalLetterCount();
   headerManager.updateHeaderText(selectedPhotos.length);

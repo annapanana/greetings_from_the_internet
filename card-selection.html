@@ -16,7 +16,7 @@
     <!-- Import Materialize Functionality -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <!-- Import Custom Script -->
-    <script src="js/interactivity.js" defer></script>
+    <script src="js/card_selection.js" defer></script>
   </head>
   <body>
 
@@ -38,22 +38,61 @@
 
       </div>
       <div class="row">
-        <div class="col l1 s0"><br></div>
-        <div class="col l10 s12">
-          <div class="carousel carousel-slider center" data-indicators="true">
-            <a class="carousel-item" href="#one!"><img src="assets/post_card_01.svg"></a>
-            <a class="carousel-item" href="#two!"><img src="assets/post_card_03.svg"></a>
-          </div>
+        <div class="col l2 center">
+          <a id="nav_to_search" href="index.html" class="btn-floating btn-large waves-effect waves-light red"><img class="circle-button" src="assets/arrow_back.svg" alt="next-button" /></a>
+          <div class="hint-text">back</div>
         </div>
-        <div class="col l1 s0"><br></div>
+        <div class="col l8">
+          <img id="preview" name="pcard1" src="assets/post_card_01.svg" alt="pcard1" />
+        </div>
+        <div class="col l2 center">
+          <a href="search.html" class="btn-floating btn-large waves-effect waves-light red valign center-block"><img class="circle-button" src="assets/arrow_forward.svg" alt="next-button" /></a>
+          <div class="hint-text">next</div>
+        </div>
       </div>
       <div class="row center">
-        <a href="search.html" class="waves-effect waves-light btn red">GET STARTED!</a>
+        <div class="hint-text">
+          Select a postcard template then hit next to continue.
+        </div>
       </div>
       <div class="row">
-        <h6>
-          Whatever mlkshk hella, listicle everyday carry PBRB chicharrones stumptown pug chillwave butcher typewriter lo-fi. Post-ironic thundercats roof party, schlitz next level vinyl la croix blue bottle small batch portland PBRB leggings letterpress. Small batch synth cronut tumblr.
-        </h6>
+        <div class="col l1"><br></div>
+        <div class="col l2">
+          <div class="card">
+            <div class="card-image">
+              <img class="card-thumb" name="pcard1" src="assets/post_card_01.svg" alt="pcard1" />
+            </div>
+          </div>
+        </div>
+        <div class="col l2">
+          <div class="card">
+            <div class="card-image">
+              <img class="card-thumb" name="pcard2" src="assets/post_card_02.svg" alt="pcard2" />
+            </div>
+          </div>
+        </div>
+        <div class="col l2">
+          <div class="card">
+            <div class="card-image">
+              <img class="card-thumb" name="pcard3" src="assets/post_card_03.svg" alt="pcard3" />
+            </div>
+          </div>
+        </div>
+        <div class="col l2">
+          <div class="card">
+            <div class="card-image">
+              <img class="card-thumb" name="pcard4" src="assets/post_card_04.svg" alt="pcard4" />
+            </div>
+          </div>
+        </div>
+        <div class="col l2">
+          <div class="card">
+            <div class="card-image">
+              <img class="card-thumb" name="pcard5" src="assets/post_card_05.svg" alt="pcard5" />
+            </div>
+          </div>
+        </div>
+        <div class="col l1"><br></div>
       </div>
     </div>
     <!-- Footer -->

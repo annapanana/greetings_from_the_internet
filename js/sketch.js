@@ -8,6 +8,7 @@ var curColor = {r:"f", g:"f", b:"f"};
 // var p_strokes;
 
 function preload() {
+
   var postCardObject = localStorage.getItem("postcardTemplate");
   postCardObject = JSON.parse(postCardObject);
   // get the greetings text
@@ -67,6 +68,36 @@ function preload() {
     updateColorSelection(e.target);
   });
 
+  $("#done_editing").on("click", function(e) {
+    // var $uploadedPhoto = $.
+    console.log("done editing");
+    addPhoto("postcards");
+  });
+}
+
+function addPhoto(albumName) {
+  // var files = document.getElementById('photoupload').files;
+  // if (!files.length) {
+  //   return alert('Please choose a file to upload first.');
+  // }
+  // var file = files[0];
+  var file = "img/kitten_01.jpg";
+  var fileName = file.name;
+  var albumPhotosKey = encodeURIComponent(albumName) + '//';
+
+  var photoKey = albumPhotosKey + fileName;
+
+  s3.upload({
+    Key: photoKey,
+    Body: file,
+    ACL: 'public-read'
+  }, function(err, data) {
+    if (err) {
+      return alert('There was an error uploading your photo: ', err.message);
+    }
+    alert('Successfully uploaded photo.');
+    viewAlbum(albumName);
+  });
 }
 
 function removeNonLetters(str) {
@@ -81,8 +112,7 @@ function removeNonLetters(str) {
 function initColorBlobs() {
 
   $(".color-blob").each(function(e) {
-    // var color = e.attr("name");
-    // e.css("border-color");
+    $(this).css("background-color", $(this).attr("name"));
     $(this).css("border-color", $(this).attr("name"));
   });
 }
@@ -121,15 +151,13 @@ function drawCard() {
   }
 }
 
-function draw() {
-}
-
 function updateColorSelection(target) {
+  initColorBlobs();
   if($(target).hasClass("color-blob")) {
     // console.log("update color");
     curColor = $(target).attr("name");
     curColor = hexToRgb(curColor);
-    console.log(curColor);
+    $(target).css("border-color", "black"); //set this to white
     drawCard();
   }
 }

@@ -18,6 +18,9 @@
   <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <!-- Import custom functionality -->
   <script language="javascript" type="text/javascript" src="js/sketch.js"></script>
+  <script language="javascriot" src="js/amazonconfig.js"></script>
+  <!-- Imort amazon SDK config -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js" defer></script>
 </head>
 
 <body>
@@ -37,27 +40,29 @@
       <div id="cardCanvas" class=""></div>
     </div>
     <div id="color-palette" class="custom-col-less">
+      <h4 class="center">Select a color</h4>
       <div class="custom-row">
         <div class="color-blob" name="#ec504a"></div>
         <div class="color-blob" name="#f5c13a"></div>
         <div class="color-blob" name="#a5c1bd"></div>
       </div>
       <div class="custom-row">
-        <img class="color-blob" src="assets/colors/color_04.svg" alt="color 4" name="#a3b89a"/>
-        <img class="color-blob" src="assets/colors/color_05.svg" alt="color 5" name="#9b868a"/>
-        <img class="color-blob" src="assets/colors/color_06.svg" alt="color 6" name="#5181a5"/>
+        <div class="color-blob" name="#a3b89a"></div>
+        <div class="color-blob" name="#9b868a"></div>
+        <div class="color-blob" name="#5181a5"></div>
       </div>
       <div class="custom-row">
-        <img class="color-blob" src="assets/colors/color_07.svg" alt="color 7" name="#efe6bf"/>
-        <img class="color-blob" src="assets/colors/color_08.svg" alt="color 8" name="#160f1e"/>
-        <img class="color-blob" src="assets/colors/color_09.svg" alt="color 9" name="#c9d5d4"/>
+        <div class="color-blob" name="#efe6bf"></div>
+        <div class="color-blob" name="#160f1e"></div>
+        <div class="color-blob" name="#c9d5d4"></div>
       </div>
     </div>
   </div>
 
   <div class="container">
     <div class="row center">
-      <a href="message-composition.html" class="waves-effect waves-light btn red">done editing</a>
+      <!-- href="message-composition.html" -->
+      <a id="done_editing" class="waves-effect waves-light btn red">done editing</a>
     </div>
   </div>
 

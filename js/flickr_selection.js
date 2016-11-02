@@ -7,9 +7,12 @@ $(function() {
   // TODO Hide image UI until the images have been loaded from Flickr
   var cardObject = localStorage.getItem("postcardTemplate");
   cardObject = JSON.parse(cardObject);
-  messageText = cardObject["text"];
+  messageText = cardObject.text;
   $('#search_button').on('click', function() {
     searchFlickr($('#search_criteria').val(), 1);
+    // save the search text to the postcard template object in local storage
+    cardObject.searchText = $('#search_criteria').val();
+    localStorage.setItem("postcardTemplate", JSON.stringify(cardObject));
   });
 });
 

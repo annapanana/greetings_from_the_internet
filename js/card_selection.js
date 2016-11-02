@@ -15,29 +15,31 @@ function updateGallery(target) {
   var preview = $("#preview");
   preview.attr("src", $(target).attr("src"));
   preview.attr("name", $(target).attr("name"));
+  console.log(preview.attr("src"));
   templateSelection(preview);
 }
 
 function templateSelection(preview) {
   var postcardTemplate = {
     source: preview.attr("src"),
-    text: ""
+    text: "",
   }
   switch (preview.attr("name")) {
     case "pcard1":
-      postcardTemplate.text = "Hello";
+      postcardTemplate.text = "hello";
+      postcardTemplate.source = "assets/post_card_01.jpg"
       break;
     case "pcard2":
-      postcardTemplate.text = "Guten Tag 1";
+      postcardTemplate.text = "guten tag 1";
       break;
     case "pcard3":
-      postcardTemplate.text = "Howdy";
+      postcardTemplate.text = "howdy";
       break;
     case "pcard4":
-      postcardTemplate.text = "Oh2 Hello 1";
+      postcardTemplate.text = "oh2 hello 1";
       break;
     case "pcard5":
-      postcardTemplate.text = "Hey Friend";
+      postcardTemplate.text = "hey friend";
       break;
     default:
       console.error("Could not save selected postcard template");

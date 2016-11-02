@@ -9,10 +9,16 @@ var p_strokes;
 function preload() {
   var postCardObject = localStorage.getItem("postcardTemplate");
   postCardObject = JSON.parse(postCardObject);
-  var text = postCardObject["text"];
+  // get the greetings text
+  var text = postCardObject.text;
+  // get the background image
+  var backgroundImg = postCardObject.source;
+  // get search text
+  var searchText = postCardObject.searchText;
+
   text = removeNonLetters(text);
   var textObjects = [];
-  //TODO save and retrieve the location
+
 
   $.ajax({
     type: "GET",
@@ -25,16 +31,18 @@ function preload() {
 
       // build the letter data object
       composition.greeting = text;
+      composition.customText = searchText;
       composition.letters = getLetterData(textObjects);
+      composition.backgroundImg = loadImage(backgroundImg);
+      composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
+      composition.graphic = createGraphics(500, 170);
+
 
       // Add the photo data to the letter object
       for (let i = 0; i < composition["letters"].length; i++) {
         var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
-        // composition["letters"][i].img = imageURL;
         composition["letters"][i].img = loadImage(imageURL);
-        // composition["letters"][i].imageMask = "assets/letters/"+text[i]+".svg";
         composition["letters"][i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
-        // composition["letters"][i].imageStroke = "assets/letters/"+text[i]+"_stroke.svg";
         composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
       }
 
@@ -69,12 +77,14 @@ function setup() {
   cnv.parent("cardCanvas");
   background('#d3d3d3');
 
-  // textSize(16);
-  // textAlign(CENTER);
-  // var textTest = text("ABC", 0, 0);
-  // text("ABC", 50, 70);
 
-  console.log("calling setup");
+  image(composition.backgroundImg, 0, 0, 600, 400)
+  textSize(48);
+  textFont(composition.customTextFont);
+  textAlign(CENTER);
+  text("greentings from "+composition.customText, 300, 320);
+  // composition.graphic.background(100);
+
   for (let i = 0; i < composition["letters"].length; i++) {
     var thisImage = composition["letters"][i];
     // Mask letter

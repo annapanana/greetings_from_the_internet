@@ -19,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/annapanana/greetings_from_the_internet/issues"
   },
-  "homepage": "https://github.com/annapanana/greetings_from_the_internet#readme"
+  "homepage": "https://github.com/annapanana/greetings_from_the_internet#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "^2.69.0"
+  },
+  "devDependencies": {}
 }

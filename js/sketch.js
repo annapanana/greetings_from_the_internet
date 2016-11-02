@@ -49,15 +49,6 @@ function preload() {
       //   console.log(data);
       // });
 
-      // for (let i = 0; i < composition["letters"].length; i++) {
-      //   var thisImage = composition["letters"][i];
-      //   // Mask letter
-      //   thisImage.img.mask(thisImage.imgMask);
-      //   // Draw Image
-      //   image(thisImage.img, 0, 0, 150, 150);
-      //   image(thisImage.imageStroke, 0, 0, 150, 150)
-      //   console.log(thisImage);
-      // }
     }
   });
   testImg = loadImage("img/kitten_01.jpg");
@@ -78,6 +69,11 @@ function setup() {
   cnv.parent("cardCanvas");
   background('#d3d3d3');
 
+  // textSize(16);
+  // textAlign(CENTER);
+  // var textTest = text("ABC", 0, 0);
+  // text("ABC", 50, 70);
+
   console.log("calling setup");
   for (let i = 0; i < composition["letters"].length; i++) {
     var thisImage = composition["letters"][i];
@@ -85,8 +81,8 @@ function setup() {
     thisImage.img.mask(composition["letters"][i]["imageMask"]);
 
     // Draw Image
-    image(thisImage.img, thisImage.x, thisImage.y, 150, 150);
-    image(thisImage.imageStroke, thisImage.x, thisImage.y, 150, 150)
+    image(thisImage.img, thisImage.x-50, thisImage.y, 100, 100);
+    image(thisImage.imageStroke, thisImage.x-50, thisImage.y, 100, 100)
   }
 }
 

@@ -3,18 +3,17 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 600 400" style="enable-background:new 0 0 600 400;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#E54231;}
-	.st1{font-family:'DayPosterBlack';}
-	.st2{font-size:110px;}
-	.st3{fill:#EC504A;}
-	.st4{font-family:'Yellowtail';}
-	.st5{font-size:36px;}
+	.st0{fill:#EC504A;}
+	.st1{font-family:'Yellowtail';}
+	.st2{font-size:36px;}
+	.st3{fill:#E54231;}
+	.st4{font-family:'DayPosterBlack';}
+	.st5{font-size:110px;}
 </style>
-<text transform="matrix(1 0 0 1 121.2528 210.7587)" class="st0 st1 st2">Hello</text>
-<text transform="matrix(1 0 0 1 135.4778 277.5041)" class="st3 st4 st5">Greetings from the Internet</text>
-<text transform="matrix(1 0 0 1 121.2526 210.759)" class="st0 st1 st2">H</text>
-<text transform="matrix(1 0 0 1 219.9196 210.759)" class="st0 st1 st2">e</text>
-<text transform="matrix(1 0 0 1 278.9194 210.7593)" class="st0 st1 st2">l</text>
-<text transform="matrix(1 0 0 1 338.2528 210.7597)" class="st0 st1 st2">l</text>
-<text transform="matrix(1 0 0 1 396.9199 210.7603)" class="st0 st1 st2">o</text>
+<text transform="matrix(1 0 0 1 135.4778 277.5041)" class="st0 st1 st2">Greetings from the Internet</text>
+<text transform="matrix(1 0 0 1 130.3972 207.237)" class="st3 st4 st5">h</text>
+<text transform="matrix(1 0 0 1 211.3092 207.237)" class="st3 st4 st5">e</text>
+<text transform="matrix(1 0 0 1 270.1706 207.237)" class="st3 st4 st5">l</text>
+<text transform="matrix(1 0 0 1 329.4206 207.237)" class="st3 st4 st5">l</text>
+<text transform="matrix(1 0 0 1 388.5334 207.2371)" class="st3 st4 st5">o</text>
 </svg>

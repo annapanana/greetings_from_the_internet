@@ -2,9 +2,10 @@
 
 var composition = {};
 var testImg;
-var p_masks;
-var p_images;
-var p_strokes;
+var curColor = {r:"f", g:"f", b:"f"};
+// var p_masks;
+// var p_images;
+// var p_strokes;
 
 function preload() {
   var postCardObject = localStorage.getItem("postcardTemplate");
@@ -13,6 +14,7 @@ function preload() {
   var text = postCardObject.text;
   // get the background image
   var backgroundImg = postCardObject.source;
+  backgroundImg = changeImageFormat(backgroundImg);
   // get search text
   var searchText = postCardObject.searchText;
 
@@ -56,10 +58,15 @@ function preload() {
       // Promise.all(allImageLoading).then(function (data) {
       //   console.log(data);
       // });
-
+      initColorBlobs();
     }
   });
   testImg = loadImage("img/kitten_01.jpg");
+
+  $("#color-palette").on("click", function(e) {
+    updateColorSelection(e.target);
+  });
+
 }
 
 function removeNonLetters(str) {
@@ -71,36 +78,63 @@ function removeNonLetters(str) {
   }  return newString;
 }
 
+function initColorBlobs() {
+
+  $(".color-blob").each(function(e) {
+    // var color = e.attr("name");
+    // e.css("border-color");
+    $(this).css("border-color", $(this).attr("name"));
+  });
+}
+
 function setup() {
   // createCanvas(1875, 1275);
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');
 
+  drawCard();
+}
 
-  image(composition.backgroundImg, 0, 0, 600, 400)
+
+function drawCard() {
+  console.log("draw card");
+  image(composition.backgroundImg, 0, 0, 600, 400);
   textSize(48);
   textFont(composition.customTextFont);
   textAlign(CENTER);
+  fill(curColor.r, curColor.g, curColor.b);
   text("greentings from "+composition.customText, 300, 320);
   // composition.graphic.background(100);
-
   for (let i = 0; i < composition["letters"].length; i++) {
     var thisImage = composition["letters"][i];
     // Mask letter
     thisImage.img.mask(composition["letters"][i]["imageMask"]);
 
-    // Draw Image
-    image(thisImage.img, thisImage.x-50, thisImage.y, 100, 100);
-    image(thisImage.imageStroke, thisImage.x-50, thisImage.y, 100, 100)
+    // Draw Imag
+    image(thisImage.img, thisImage.x, thisImage.y, 150, 150);
+
+    // Draw stroke according to tint color
+    tint(curColor.r, curColor.g, curColor.b);
+    image(thisImage.imageStroke, thisImage.x, thisImage.y, 150, 150)
+    noTint();
   }
 }
 
 function draw() {
 }
 
+function updateColorSelection(target) {
+  if($(target).hasClass("color-blob")) {
+    // console.log("update color");
+    curColor = $(target).attr("name");
+    curColor = hexToRgb(curColor);
+    console.log(curColor);
+    drawCard();
+  }
+}
+
 function mouseClicked() {
-  console.log("clicked");
   // saveCanvas('myCanvas', 'jpg');
   // $.ajax({
   //   type: "POST",
@@ -174,3 +208,22 @@ function xmlToJson(xml) {
 	}
 	return obj;
 };
+
+function changeImageFormat(str) {
+  var newStr = "";
+  for (var i = 0; i < str.length; i++) {
+    newStr+=str[i];
+    if (str[i] === ".") {
+      return newStr + "jpg";
+    }
+  }
+}
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}

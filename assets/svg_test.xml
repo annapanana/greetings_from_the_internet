@@ -4,16 +4,15 @@
 	 viewBox="0 0 600 400" style="enable-background:new 0 0 600 400;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#EC504A;}
-	.st1{font-family:'Yellowtail';}
-	.st2{font-size:36px;}
-	.st3{fill:#E54231;}
-	.st4{font-family:'DayPosterBlack';}
-	.st5{font-size:110px;}
+	.st1{font-family:'DayPosterBlack';}
+	.st2{font-size:157.1543px;}
+	.st3{font-family:'Yellowtail';}
+	.st4{font-size:51.4323px;}
 </style>
-<text transform="matrix(1 0 0 1 135.4778 277.5041)" class="st0 st1 st2">Greetings from the Internet</text>
-<text transform="matrix(1 0 0 1 130.3972 207.237)" class="st3 st4 st5">h</text>
-<text transform="matrix(1 0 0 1 211.3092 207.237)" class="st3 st4 st5">e</text>
-<text transform="matrix(1 0 0 1 270.1706 207.237)" class="st3 st4 st5">l</text>
-<text transform="matrix(1 0 0 1 329.4206 207.237)" class="st3 st4 st5">l</text>
-<text transform="matrix(1 0 0 1 388.5334 207.2371)" class="st3 st4 st5">o</text>
+<text transform="matrix(1 0 0 1 25 100)" class="st0 st1 st2">h</text>
+<text transform="matrix(1 0 0 1 140 100)" class="st0 st1 st2">e</text>
+<text transform="matrix(1 0 0 1 235 100)" class="st0 st1 st2">l</text>
+<text transform="matrix(1 0 0 1 335 100)" class="st0 st1 st2">l</text>
+<text transform="matrix(1 0 0 1 400 100)" class="st0 st1 st2">o</text>
+<text transform="matrix(1 0 0 1 64.9509 100)" class="st0 st3 st4">Greetings from the Internet</text>
 </svg>

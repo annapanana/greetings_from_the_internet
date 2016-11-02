@@ -26,20 +26,19 @@ function templateSelection(preview) {
   }
   switch (preview.attr("name")) {
     case "pcard1":
-      postcardTemplate.text = "hello";
-      postcardTemplate.source = "assets/post_card_01.jpg"
+      postcardTemplate.text = "HELLO";
       break;
     case "pcard2":
-      postcardTemplate.text = "guten tag 1";
+      postcardTemplate.text = "GUTEN TAG";
       break;
     case "pcard3":
-      postcardTemplate.text = "howdy";
+      postcardTemplate.text = "HOWDY";
       break;
     case "pcard4":
-      postcardTemplate.text = "oh2 hello 1";
+      postcardTemplate.text = "OH HELLO";
       break;
     case "pcard5":
-      postcardTemplate.text = "hey friend";
+      postcardTemplate.text = "HEY FRIEND";
       break;
     default:
       console.error("Could not save selected postcard template");

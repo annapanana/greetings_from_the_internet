@@ -70,7 +70,8 @@ h6 {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: solid 2px;
+  border: solid 4px;
+  border-color: #FFF;
 }
 
 .custom-container {
@@ -100,5 +101,34 @@ h6 {
   justify-content: space-around;
   padding-top: 20px;
   width: 40%;
-  background-color: rgb(208, 208, 208);
+  /*background-color: rgb(208, 208, 208);*/
+}
+
+.info-text-container {
+
+  position: fixed !important;
+  right: 0;
+  margin-top: 200px;
+  width: 300px;
+  min-height: 100px;
+  border: solid;
+  background-color: rgba(255, 255, 255, .75);
+  padding: 20px;
+  z-index: 2;
+}
+
+.info-text-row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.info-text-column {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+}
+
+a {
+  color: black;
 }

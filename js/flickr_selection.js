@@ -4,11 +4,18 @@ var photoManager;
 var messageText = "";
 
 $(function() {
-  // TODO Hide image UI until the images have been loaded from Flickr
+  $("#info-box").hide();
   var cardObject = localStorage.getItem("postcardTemplate");
   cardObject = JSON.parse(cardObject);
   messageText = cardObject.text;
+  // Set greetings text in hidden info box
   $('#search_button').on('click', function() {
+    $("#info-box").show();
+    console.log("message text "+messageText);
+    for (var i = 0; i < messageText.length; i++) {
+      $("#greentings-text").append("<a><b>"+messageText[i]+"</a></b>")
+    }
+
     searchFlickr($('#search_criteria').val(), 1);
     // save the search text to the postcard template object in local storage
     cardObject.searchText = $('#search_criteria').val();
@@ -78,6 +85,14 @@ function setPhotos(allPhotos, text) {
   numOfLetters = headerManager.getTotalLetterCount();
   headerManager.updateHeaderText(selectedPhotos.length);
 
+  // Reset greeting text in info box
+  console.log("num of letters " + numOfLetters);
+  for (var i = 0; i < numOfLetters.length; i++) {
+    // TODO reset text color on refresh
+    console.log(i);
+    $("#greentings-text").children("a:nth-child("+(i+1)+")").css("color", "black");
+  }
+
   return {
     // Add a photo to the collection
     addPhoto: function(selection) {
@@ -115,18 +130,25 @@ function setPhotos(allPhotos, text) {
       }
     },
     checkPhotoStatus: function(selection) {
-      // If the photo is selected, remove if not add it
-      if ($(selection).hasClass("selected-photo")) {
-        photoManager.removePhoto(selection);
-      } else {
-        photoManager.addPhoto(selection);
-      }
-      console.log(currentPhotoCount + " " + numOfLetters);
 
       if (currentPhotoCount === numOfLetters) {
         // enable submit button
-        $("#done_button").toggleClass("disabled");
-        // TODO prevent the user from adding a photo if quota is filled
+        $("#done_button").removeClass("disabled");
+        $('.toast').remove();
+        Materialize.toast("Photo Queue is full! Please select done button :)");
+      } else {
+        $("#done_button").addClass("disabled");
+        // If the photo is selected, remove if not add it
+        if ($(selection).hasClass("selected-photo")) {
+          photoManager.removePhoto(selection);
+        } else {
+          photoManager.addPhoto(selection);
+        }
+
+        // If this is the last photo for the queue, trigger photo-filled functionality
+        if (currentPhotoCount === numOfLetters) {
+          photoManager.checkPhotoStatus();
+        }
       }
     },
     checkSubmit: function() {
@@ -143,11 +165,12 @@ function setPhotos(allPhotos, text) {
 
 function headerData() {
   var letterCount = 0;
+  var childNum = 0;
   // var searchText = text;
   // console.log(text);
   return {
     initializeHeader: function() {
-      for (var i = 0; i < messageText.length; i++) {
+      for (let i = 0; i < messageText.length; i++) {
         if (messageText[i] !== " "){
           letterCount+=1;
         }
@@ -160,8 +183,13 @@ function headerData() {
       return letterCount - numOfSelectedPhotos;
     },
     updateHeaderText: function(numOfSelectedPhotos) {
-      $(".toast").remove();
-      Materialize.toast("Select "+ (letterCount - numOfSelectedPhotos) + " photos");
+      $("#photo-count-text").text("Select "+ (letterCount - numOfSelectedPhotos) + " more photos");
+      // Update color of greeting text as user selects more photos
+      // Account for words with spaces / child num is defined at the top of func
+      if (messageText[numOfSelectedPhotos-1] === " ") {
+        childNum = 1;
+      }
+      $("#greentings-text").children("a:nth-child("+(numOfSelectedPhotos+childNum)+")").css("color", "red");
     },
    };
 }

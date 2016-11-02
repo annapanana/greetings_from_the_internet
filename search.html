@@ -20,6 +20,25 @@
     <script src="js/flickr_selection.js" charset="utf-8" defer></script>
   </head>
   <body>
+    <div id="info-box" class="info-text-container">
+      <div class="info-text-row">
+        <div class="info-text-column">
+          <a id="refresh_button" class="btn-floating btn-large waves-effect waves-light red center"><img class="circle-button" src="assets/refresh.svg" alt="refresh" /></a>
+          <h6 class ="center">Refresh</h6>
+        </div>
+        <div class="info-text-column">
+          <a id="done_button" class="btn-floating btn-large waves-effect waves-light red disabled center"><img class="circle-button" src="assets/done.svg" alt="" /></a>
+          <h6 class="center">Done</h6>
+        </div>
+      </div>
+      <div class="info-text-row">
+        <div class="info-text-column">
+          <h6 class="center">Select a photo for each letter in the word:</h6>
+          <h4 id="greentings-text" class="center info-text-greeting"></h4>
+          <h6 id="photo-count-text" class="center">Select 4 more photos</h6>
+        </div>
+      </div>
+    </div>
     <!-- Navbar -->
     <div class="navbar-fixed">
       <nav>
@@ -51,15 +70,16 @@
         <div class="col l2 s0"><br></div>
       </div>
       <div class="row">
-        <h6>
-          Whatever mlkshk hella, listicle everyday carry PBRB chicharrones stumptown pug chillwave butcher typewriter lo-fi. Post-ironic thundercats roof party, schlitz next level vinyl la croix blue bottle small batch portland PBRB leggings letterpress. Small batch synth cronut tumblr.
+        <h4 class="center">Step 2</h4>
+        <h6 class="center">
+          Type a keyword to find images. Each image will fill a letter of your greeting text for the fron tof your postcard!
         </h6>
       </div>
     </div>
 
     <!-- This container is hidden until the user searches -->
     <div id="photo_container" class="container">
-      <div class="row center">
+      <!-- <div class="row center">
         <div class="col l3"><br></div>
         <div class="col l3">
           <a id="refresh_button" class="btn-floating btn-large waves-effect waves-light red"><img class="circle-button" src="assets/refresh.svg" alt="refresh" /></a>
@@ -76,7 +96,7 @@
         <div class="col l3">
           <h6>Done</h6>
         </div>
-      </div>
+      </div> -->
       <div class="row" id="card_columns">
         <!-- Columns are dynamically populated by search results -->
         <div class="col l4 photo-column">

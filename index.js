@@ -25,8 +25,8 @@ app.use('/', function(req, res) {
   req.pipe(request(url)).pipe(res);
 });
 
-app.use('/s3', function(req, res) {
-  res.send('Hello World!');
-});
+// app.use('/s3', function(req, res) {
+//   res.send('Hello World!');
+// });
 
 app.listen(process.env.PORT || 3000);

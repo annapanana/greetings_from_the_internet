@@ -135,7 +135,7 @@ function setPhotos(allPhotos, text) {
         // enable submit button
         $("#done_button").removeClass("disabled");
         $('.toast').remove();
-        Materialize.toast("Photo Queue is full! Please select done button :)");
+        Materialize.toast("Please select done button :)");
       } else {
         $("#done_button").addClass("disabled");
         // If the photo is selected, remove if not add it
@@ -208,4 +208,6 @@ function photoLayout(photos) {
       columnCounter = 0;
     }
   }
+  // TODO enable lazy load for materialize cards
+  // $(".lazy").lazyload();
 }

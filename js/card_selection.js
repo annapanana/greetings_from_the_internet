@@ -9,6 +9,13 @@ $(document).ready(function(){
   $("#nav_to_search").on("click", function() {
     templateSelection();
   });
+
+  $(".card-thumb").mouseenter(function() {
+    TweenMax.to($(this), .2, {css:{scaleX:1.2, scaleY:1.2}});
+  });
+  $(".card-thumb").mouseleave(function() {
+    TweenMax.to($(this), .2, {css:{scaleX:1, scaleY:1}});
+  });
 });
 
 function updateGallery(target) {

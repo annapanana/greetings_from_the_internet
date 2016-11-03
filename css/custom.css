@@ -58,12 +58,6 @@ h6 {
   opacity: .5;
 }
 
-/*Card Selection*/
-.card-thumb:hover {
-  background-color: #f44336;
-  /*why is cursor not working?*/
-  cursor: "grab";
-}
 
 /*Composition Page*/
 .color-blob {
@@ -115,7 +109,6 @@ h6 {
   background-color: rgba(255, 255, 255, .75);
   padding: 20px;
   z-index: 2;
-  border-radius: 10% !important;
 }
 
 .info-text-row {

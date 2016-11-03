@@ -7,20 +7,20 @@ var curColor = {r:"f", g:"f", b:"f"};
 // var p_images;
 // var p_strokes;
 
-function preload() {
-
-  var postCardObject = localStorage.getItem("postcardTemplate");
-  postCardObject = JSON.parse(postCardObject);
-  // get the greetings text
-  var text = postCardObject.text;
-  // get the background image
-  var backgroundImg = postCardObject.source;
-  backgroundImg = changeImageFormat(backgroundImg);
-  // get search text
-  var searchText = postCardObject.searchText;
-
-  text = removeNonLetters(text);
-  var textObjects = [];
+// function preload() {
+//
+//   var postCardObject = localStorage.getItem("postcardTemplate");
+//   postCardObject = JSON.parse(postCardObject);
+//   // get the greetings text
+//   var text = postCardObject.text;
+//   // get the background image
+//   var backgroundImg = postCardObject.source;
+//   backgroundImg = changeImageFormat(backgroundImg);
+//   // get search text
+//   var searchText = postCardObject.searchText;
+//
+//   text = removeNonLetters(text);
+//   var textObjects = [];
 
 
   // $.ajax({
@@ -61,7 +61,7 @@ function preload() {
   //     initColorBlobs();
   //   }
   // });
-  testImg = loadImage("img/kitten_01.jpg");
+  // testImg = loadImage("img/kitten_01.jpg");
 
   // $("#color-palette").on("click", function(e) {
   //   updateColorSelection(e.target);
@@ -72,7 +72,7 @@ function preload() {
   //   console.log("done editing");
   //   addPhoto("postcards");
   // });
-}
+// }
 
 function initColorBlobs() {
 
@@ -84,6 +84,7 @@ function initColorBlobs() {
 
 function setup() {
   // createCanvas(1875, 1275);
+  testImg = loadImage("img/kitten_01.jpg");
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');

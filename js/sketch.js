@@ -38,7 +38,6 @@ function preload() {
       composition.letters = getLetterData(textObjects);
       composition.backgroundImg = loadImage(backgroundImg);
       composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
-      composition.graphic = createGraphics(500, 170);
 
 
       // Add the photo data to the letter object

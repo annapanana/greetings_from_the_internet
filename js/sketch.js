@@ -49,6 +49,7 @@ function preload() {
         composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
       }
 
+      setup();
       // load all images
       // var allImageLoading = [];
       // for (var i = 0; i < composition["letters"].length; i++) {

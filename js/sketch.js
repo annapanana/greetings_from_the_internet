@@ -35,20 +35,18 @@ function preload() {
       // build the letter data object
       composition.greeting = text;
       composition.customText = searchText;
-      composition.letters = getLetterData(textObjects);
-      composition.backgroundImg = loadImage(backgroundImg);
-      composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
+      // composition.letters = getLetterData(textObjects);
+      // composition.backgroundImg = loadImage(backgroundImg);
+      // composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
 
 
       // Add the photo data to the letter object
-      for (let i = 0; i < composition["letters"].length; i++) {
-        var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
-        composition["letters"][i].img = loadImage(imageURL);
-        composition["letters"][i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
-        composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
-      }
-
-      setup();
+      // for (let i = 0; i < composition["letters"].length; i++) {
+      //   var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
+      //   composition["letters"][i].img = loadImage(imageURL);
+      //   composition["letters"][i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
+      //   composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
+      // }
 
       // load all images
       // var allImageLoading = [];
@@ -76,40 +74,6 @@ function preload() {
   });
 }
 
-function addPhoto(albumName) {
-  // var files = document.getElementById('photoupload').files;
-  // if (!files.length) {
-  //   return alert('Please choose a file to upload first.');
-  // }
-  // var file = files[0];
-  var file = "img/kitten_01.jpg";
-  var fileName = file.name;
-  var albumPhotosKey = encodeURIComponent(albumName) + '//';
-
-  var photoKey = albumPhotosKey + fileName;
-
-  s3.upload({
-    Key: photoKey,
-    Body: file,
-    ACL: 'public-read'
-  }, function(err, data) {
-    if (err) {
-      return alert('There was an error uploading your photo: ', err.message);
-    }
-    alert('Successfully uploaded photo.');
-    viewAlbum(albumName);
-  });
-}
-
-function removeNonLetters(str) {
-  var newString = "";
-  for (var i = 0; i < str.length; i++) {
-    if (str[i].match(/[a-z]/i)) {
-      newString+=str[i];
-    }
-  }  return newString;
-}
-
 function initColorBlobs() {
 
   $(".color-blob").each(function(e) {
@@ -123,33 +87,32 @@ function setup() {
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');
-  image(composition.backgroundImg, 0, 0, 600, 400);
   drawCard();
 }
 
 
 function drawCard() {
   console.log("draw card");
-  image(composition.backgroundImg, 0, 0, 600, 400);
+  // image(composition.backgroundImg, 0, 0, 600, 400);
   textSize(48);
-  textFont(composition.customTextFont);
+  // textFont(composition.customTextFont);
   textAlign(CENTER);
   fill(curColor.r, curColor.g, curColor.b);
   text("greentings from "+composition.customText, 300, 320);
   // composition.graphic.background(100);
-  for (let i = 0; i < composition["letters"].length; i++) {
-    var thisImage = composition["letters"][i];
-    // Mask letter
-    thisImage.img.mask(composition["letters"][i]["imageMask"]);
-
-    // Draw Imag
-    image(thisImage.img, thisImage.x, thisImage.y, 150, 150);
-
-    // Draw stroke according to tint color
-    tint(curColor.r, curColor.g, curColor.b);
-    image(thisImage.imageStroke, thisImage.x, thisImage.y, 150, 150)
-    noTint();
-  }
+  // for (let i = 0; i < composition["letters"].length; i++) {
+  //   var thisImage = composition["letters"][i];
+  //   // Mask letter
+  //   thisImage.img.mask(composition["letters"][i]["imageMask"]);
+  //
+  //   // Draw Imag
+  //   image(thisImage.img, thisImage.x, thisImage.y, 150, 150);
+  //
+  //   // Draw stroke according to tint color
+  //   tint(curColor.r, curColor.g, curColor.b);
+  //   image(thisImage.imageStroke, thisImage.x, thisImage.y, 150, 150)
+  //   noTint();
+  // }
 }
 
 function updateColorSelection(target) {
@@ -255,4 +218,38 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function addPhoto(albumName) {
+  // var files = document.getElementById('photoupload').files;
+  // if (!files.length) {
+  //   return alert('Please choose a file to upload first.');
+  // }
+  // var file = files[0];
+  var file = "img/kitten_01.jpg";
+  var fileName = file.name;
+  var albumPhotosKey = encodeURIComponent(albumName) + '//';
+
+  var photoKey = albumPhotosKey + fileName;
+
+  s3.upload({
+    Key: photoKey,
+    Body: file,
+    ACL: 'public-read'
+  }, function(err, data) {
+    if (err) {
+      return alert('There was an error uploading your photo: ', err.message);
+    }
+    alert('Successfully uploaded photo.');
+    viewAlbum(albumName);
+  });
+}
+
+function removeNonLetters(str) {
+  var newString = "";
+  for (var i = 0; i < str.length; i++) {
+    if (str[i].match(/[a-z]/i)) {
+      newString+=str[i];
+    }
+  }  return newString;
 }

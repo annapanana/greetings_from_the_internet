@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Greetings From the Internet</title>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Import Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Lato|Yellowtail" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-    <!-- Import Custom Stylesheet -->
-    <link rel="stylesheet" href="css/custom.css" media="screen" title="custom styles">
-    <!-- Import jQuery -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <!-- Import Materialize Functionality -->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!-- Import Custom Script -->
-    <script src="js/card_selection.js" defer></script>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Test</title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Import Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato|Yellowtail" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <!-- Import Custom Stylesheet -->
+  <link rel="stylesheet" href="css/custom.css" media="screen" title="custom styles">
+  <!-- Import jQuery -->
+  <script src="js/jquery-2.2.4.min.js" defer></script>
+  <!-- Import Materialize Functionality -->
+  <script type="text/javascript" src="js/materialize.min.js" defer></script>
+  <!-- Import P5JS for image composition -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.js" defer></script>
+  <!-- Import custom functionality -->
+  <!-- <script type="text/javascript" scr="js/layoutdata.js"></script> -->
+  <script language="javascript" type="text/javascript" src="js/loadImageTest.js" defer></script>
+</head>
   <body>
 
     <!-- Navbar -->
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper nav-custom red">
-          <a href="#" class="brand-logo">gfti</a>
+          <a href="index.html" class="brand-logo">gfti</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="about.html">About</a></li>
           </ul>
@@ -37,11 +40,12 @@
       <div class="row"><br></div>
       <div class="row">
         <div class="col l5">
-          <div class="row center">
-            <img src="assets/post_card_01.svg" alt="back preview" />
+          <div class="row">
+            <!-- <img src="assets/post_card_back.png" alt="back preview" /> -->
           </div>
           <div class="row center">
-            <img src="assets/post_card_01.svg" alt="front preview" />
+            <div id="canvasFront"></div>
+            <!-- <img src="assets/post_card_01.svg" alt="front preview" /> -->
           </div>
         </div>
         <div class="col l1"><br></div>
@@ -82,6 +86,7 @@
           </div>
           <div class="col l4 offset-l2 s12">
             <h5 class="white-text">Links</h5>
+            <a href="index.html">Home</a>
             <ul>
               <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
             </ul>

@@ -229,6 +229,7 @@ function loadNewPage() {
   // img.onload = function(){
   //   ctx.drawImage(img,0,0);
   // };
+  console.log(myCanvas.toDataURL("img/png"));
   localStorage.setItem("savedImage", JSON.stringify(myCanvas.toDataURL("img/png")));
   // img.src = myCanvas.toDataURL("img/png");;
 }

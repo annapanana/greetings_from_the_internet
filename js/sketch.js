@@ -2,7 +2,8 @@
 
 var composition = {};
 var testImg;
-var curColor = {r:"f", g:"f", b:"f"};
+var curColor = {r:"0", g:"0", b:"0"};
+var curGreeting = "";
 // var p_masks;
 // var p_images;
 // var p_strokes;
@@ -23,17 +24,7 @@ function preload() {
 
   text = removeNonLetters(text);
   var textObjects = [];
-  // $.ajax({
-  //   type: "GET",
-  //   url: "assets/svg_test.xml",
-  //   dataType: "xml",
-  //   success: function (xml) {
-  //     // Parse the xml file and get data
-  //     var svgData = xmlToJson(xml);
-  //     console.log(svgData);
-  //     textObjects = svgData["svg"]["text"];
-  //
-  //     // build the letter data object
+
       composition.greeting = text;
       composition.customText = searchText;
       // composition.letters = getLetterData(layoutData["letters"]);
@@ -76,7 +67,8 @@ function preload() {
 
   $("#greetings-text").keyup(function(e) {
     // Update greetings text and re-draw card
-    drawCard($('input').val());
+    curGreeting = "Greetings from "+ $('input').val();
+    drawCard();
   })
 
 }
@@ -94,11 +86,11 @@ function setup() {
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');
-  drawCard(composition.customText);
+  curGreeting = "Greetings from "+ composition.customText;
+  drawCard();
 }
 
-
-function drawCard(customGreeting) {
+function drawCard() {
   console.log("draw card");
   console.log(composition);
   image(composition.backgroundImg, 0, 0, 600, 400);
@@ -106,7 +98,7 @@ function drawCard(customGreeting) {
   textFont(composition.customTextFont);
   textAlign(CENTER);
   fill(curColor.r, curColor.g, curColor.b);
-  text("Greetings from "+customGreeting, 300,  composition.subtext_yVal);
+  text(curGreeting, 300,  composition.subtext_yVal);
 
   for (let i = 0; i < composition.letters.length; i++) {
     var thisImage = composition.letters[i];
@@ -124,12 +116,17 @@ function drawCard(customGreeting) {
 }
 
 function updateColorSelection(target) {
-  initColorBlobs();
+
   if($(target).hasClass("color-blob")) {
+    var allBlobs = $(".color-blob");
+    for (var i = 0; i < allBlobs.length; i++) {
+      TweenMax.to($(allBlobs[i]), .2, {css:{scaleX:1, scaleY:1}});
+    }
     // console.log("update color");
     curColor = $(target).attr("name");
     curColor = hexToRgb(curColor);
-    $(target).css("border-color", "black"); //set this to white
+    // (target).css("border-color", "black"); //set this to white
+    TweenMax.to($(target), .2, {css:{scaleX:1.2, scaleY:1.2}});
     drawCard();
   }
 }
@@ -300,7 +297,7 @@ var postcardsLayouts = {
   HOWDY: {
     scale:125,
     subtext_yVal:345,
-    letters: [{l:"h", x:20, y:100}, {l:"o", x:130, y:100}, {l:"w", x:240, y:100}, {l:"d", x:365, y:100}, {l:"y", x:460, y:100}]
+    letters: [{l:"h", x:20, y:100}, {l:"o", x:130, y:100}, {l:"w", x:250, y:100}, {l:"d", x:365, y:100}, {l:"y", x:460, y:100}]
   },
   OH_HELLO: {
     scale:90,

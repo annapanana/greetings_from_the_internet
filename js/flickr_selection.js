@@ -8,20 +8,36 @@ $(function() {
   var cardObject = localStorage.getItem("postcardTemplate");
   cardObject = JSON.parse(cardObject);
   messageText = cardObject.text;
+
   // Set greetings text in hidden info box
   $('#search_button').on('click', function() {
-    $("#info-box").show();
-    console.log("message text "+messageText);
-    for (var i = 0; i < messageText.length; i++) {
-      $("#greentings-text").append("<a><b>"+messageText[i]+"</a></b>")
-    }
-
+    showInfoBox(messageText);
     searchFlickr($('#search_criteria').val(), 1);
-    // save the search text to the postcard template object in local storage
-    cardObject.searchText = $('#search_criteria').val();
-    localStorage.setItem("postcardTemplate", JSON.stringify(cardObject));
+    saveCardObject(cardObject);
+  });
+
+  // Search flickr by selected enter key
+  $("input").keypress(function(e) {
+    if (e.keyCode == 13) {
+      searchFlickr($('#search_criteria').val(), 1);
+      showInfoBox(messageText);
+      saveCardObject(cardObject);
+    }
   });
 });
+
+function showInfoBox(messageText) {
+  $("#info-box").show();
+  for (var i = 0; i < messageText.length; i++) {
+    $("#greentings-text").append("<a><b>"+messageText[i]+"</a></b>")
+  }
+}
+
+function saveCardObject(cardObject) {
+  // save the search text to the postcard template object in local storage
+  cardObject.searchText = $('#search_criteria').val();
+  localStorage.setItem("postcardTemplate", JSON.stringify(cardObject));
+}
 
 function searchFlickr(searchText, page) {
   // https://www.flickr.com/services/api/flickr.photos.search.html
@@ -73,6 +89,46 @@ function organizePhotoData(photos, searchText) {
       })
     });
   });
+  // console.log(photos);
+  // Fill image container with new search results
+  // for (var i = 0; i < photos.length; i++) {
+  //   // Get a refernece to the square photo
+  //   var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=895b279df6ecc35b1e91b50a62dd8d4f&photo_id='+photos[i].id+'&format=json&nojsoncallback=1');
+  //
+  //   $xhr.done(function(data) {
+  //     console.log(photos);
+  //     // Documentation for building this string https://www.flickr.com/services/api/misc.urls.html
+  //     // var photoSource = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_' + photos[i].secret + '.jpg';
+  //     var photoSource = data["sizes"]["size"][1]["source"];
+  //     // console.log(photoSource);
+  //     console.log(photos[i]);
+  //     //BUG - lost referene to the photos object when I put this in a new ajax call
+  //     // Build an HTML photo element
+  //     var newPhoto = $('<img src="' + photoSource +  '" alt="' + photos[i].title +'" class="photo_option" name="'+ "p_" + photos[i].id + '">');
+  //
+  //     // Add this new photo to the temp object
+  //     var keyString = "p_" + photos[i].id;
+  //     photoData[keyString] = newPhoto;
+  //
+  //     // Push only the SCR data for this key to the main photo collection object
+  //     photoCollection[keyString] = photoData[keyString][0].src;
+  //
+  //     // initialize photo manager and pass it all of the photos pulled from flickr
+  //     photoManager = setPhotos(photoCollection, searchText);
+  //     // Add an event listener to each photo to see if the user will select it
+  //     $('.photo-option').on('click', function() {
+  //       photoManager.checkPhotoStatus(event.target);
+  //     });
+  //
+  //     $('#refresh_button').on('click', function() {
+  //       photoManager.refreshPhotos();
+  //     });
+  //
+  //     $('#done_button').on('click', function() {
+  //       photoManager.checkSubmit();
+  //     })
+  //   });
+  // }
 }
 
 function setPhotos(allPhotos, text) {

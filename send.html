@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Image Test</title>
+  <title>Greetings From the Internet</title>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Import Google Fonts -->
@@ -19,7 +19,12 @@
   <script language="javascript" type="text/javascript" src="libraries/p5.js" defer></script>
   <!-- Import custom functionality -->
   <!-- <script type="text/javascript" scr="js/layoutdata.js"></script> -->
-  <script language="javascript" type="text/javascript" src="js/loadImageTest.js" defer></script>
+  <script language="javascript" type="text/javascript" src="js/send.js" defer></script>
+  <script language="javascriot" src="js/amazonconfig.js"></script>
+  <!-- Imort amazon SDK config -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js" defer></script>
+  <!-- Import Animation script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
 </head>
   <body>
 
@@ -36,44 +41,7 @@
 
     <!-- Main Body -->
     <div class="container">
-      <div class="row"><br></div>
-      <div class="row">
-        <div class="col l5">
-          <div class="row">
-            <!-- <img src="assets/post_card_back.png" alt="back preview" /> -->
-          </div>
-          <div class="row center">
-            <div id="canvasFront"></div>
-            <!-- <img src="assets/post_card_01.svg" alt="front preview" /> -->
-          </div>
-        </div>
-        <div class="col l1"><br></div>
-        <div class="col l6">
-          <div class="row">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s12">
-                  <textarea id="textarea1" class="materialize-textarea"></textarea>
-                  <label for="textarea1">Message</label>
-                </div>
-              </div>
-              <div class="row">
-               <div class="input-field col s8">
-                 <input placeholder="Dr Suess" id="first_name" type="text" class="validate">
-                 <label for="first_name">Name</label>
-               </div>
-               <div class="input-field col s10">
-                 <input placeholder="123 Lorax Lane" id="address_line1" type="text" class="validate">
-                 <label for="address_line1">Address</label>
-               </div>
-             </div>
-            </form>
-          </div>
-          <div class="row">
-            <a class="waves-effect waves-light btn red">Send</a>
-          </div>
-        </div>
-      </div>
+      <div id="cardCanvas" class=""></div>
     </div>
     <!-- Footer -->
     <footer class="page-footer red">

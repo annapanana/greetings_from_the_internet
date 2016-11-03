@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -24,6 +23,8 @@
   <script language="javascriot" src="js/amazonconfig.js"></script>
   <!-- Imort amazon SDK config -->
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js" defer></script>
+  <!-- Import Animation script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
 </head>
 
 <body>
@@ -31,9 +32,8 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper nav-custom red">
-        <a href="index.html" class="brand-logo">gfti</a>
+        <a href="index.html" class="brand-logo">Greetings from the Internet</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="about.html">About</a></li>
         </ul>
       </div>
     </nav>
@@ -48,7 +48,7 @@
 
     </div>
     <div id="color-palette" class="custom-col-less">
-      <h5 class="center">Select a color</h5>
+      <h6 class="center" style="margin:0px;">SELECT A COLOR</h6>
       <div class="custom-row">
         <div class="color-blob" name="#ec504a"></div>
         <div class="color-blob" name="#f5c13a"></div>
@@ -75,21 +75,8 @@
 
   <!-- Footer -->
   <footer class="page-footer red">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Footer Content</h5>
-          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-        </div>
-        <div class="col l4 offset-l2 s12">
-          <h5 class="white-text">Links</h5>
-          <a href="index.html">Home</a>
-          <ul>
-            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <img style="height:60px; float:left; padding-left: 20px; padding-bottom:10px;" class="site-logo" src="assets/gfti_logo.svg" alt="gfti logo" />
+    <h5 style="float:right; padding-right: 20px;" class="brand-logo white-text">Greetings, traveler!</h5>
   </footer>
 </body>
 </html>

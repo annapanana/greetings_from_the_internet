@@ -23,44 +23,44 @@ function preload() {
   var textObjects = [];
 
 
-  $.ajax({
-    type: "GET",
-    url: "assets/postcard_01.xml",
-    dataType: "xml",
-    success: function (xml) {
-      // Parse the xml file and get data
-      var svgData = xmlToJson(xml);
-      textObjects = svgData["svg"]["text"];
-
-      // build the letter data object
-      composition.greeting = text;
-      composition.customText = searchText;
-      // composition.letters = getLetterData(textObjects);
-      // composition.backgroundImg = loadImage(backgroundImg);
-      // composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
-
-
-      // Add the photo data to the letter object
-      // for (let i = 0; i < composition["letters"].length; i++) {
-      //   var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
-      //   composition["letters"][i].img = loadImage(imageURL);
-      //   composition["letters"][i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
-      //   composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
-      // }
-
-      // load all images
-      // var allImageLoading = [];
-      // for (var i = 0; i < composition["letters"].length; i++) {
-      //   allImageLoading.push(loadImage(composition["letters"][i].img));
-      //   allImageLoading.push(loadImage(composition["letters"][i].imageMask));
-      //   allImageLoading.push(loadImage(composition["letters"][i].imageStroke));
-      // }
-      // Promise.all(allImageLoading).then(function (data) {
-      //   console.log(data);
-      // });
-      initColorBlobs();
-    }
-  });
+  // $.ajax({
+  //   type: "GET",
+  //   url: "assets/postcard_01.xml",
+  //   dataType: "xml",
+  //   success: function (xml) {
+  //     // Parse the xml file and get data
+  //     var svgData = xmlToJson(xml);
+  //     textObjects = svgData["svg"]["text"];
+  //
+  //     // build the letter data object
+  //     composition.greeting = text;
+  //     composition.customText = searchText;
+  //     composition.letters = getLetterData(textObjects);
+  //     composition.backgroundImg = loadImage(backgroundImg);
+  //     composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
+  //
+  //
+  //     // Add the photo data to the letter object
+  //     for (let i = 0; i < composition["letters"].length; i++) {
+  //       var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
+  //       composition["letters"][i].img = loadImage(imageURL);
+  //       composition["letters"][i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
+  //       composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
+  //     }
+  //
+  //     // load all images
+  //     // var allImageLoading = [];
+  //     // for (var i = 0; i < composition["letters"].length; i++) {
+  //     //   allImageLoading.push(loadImage(composition["letters"][i].img));
+  //     //   allImageLoading.push(loadImage(composition["letters"][i].imageMask));
+  //     //   allImageLoading.push(loadImage(composition["letters"][i].imageStroke));
+  //     // }
+  //     // Promise.all(allImageLoading).then(function (data) {
+  //     //   console.log(data);
+  //     // });
+  //     initColorBlobs();
+  //   }
+  // });
   testImg = loadImage("img/kitten_01.jpg");
 
   $("#color-palette").on("click", function(e) {
@@ -99,6 +99,7 @@ function drawCard() {
   textAlign(CENTER);
   fill(curColor.r, curColor.g, curColor.b);
   text("greentings from "+composition.customText, 300, 320);
+  image(testImg);
   // composition.graphic.background(100);
   // for (let i = 0; i < composition["letters"].length; i++) {
   //   var thisImage = composition["letters"][i];

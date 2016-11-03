@@ -20,7 +20,7 @@ app.use('/img', express.static('css'));
 
 app.use('/', function(req, res) {
   // var url = apiServerHost + req.url;
-  var url = '/' + req.url;
+  var url = req.url;
   req.pipe(request(url)).pipe(res);
 });
 

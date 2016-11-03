@@ -50,6 +50,7 @@ function preload() {
       }
 
       setup();
+
       // load all images
       // var allImageLoading = [];
       // for (var i = 0; i < composition["letters"].length; i++) {
@@ -123,7 +124,7 @@ function setup() {
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');
-
+  image(composition.backgroundImg, 0, 0, 600, 400);
   drawCard();
 }
 

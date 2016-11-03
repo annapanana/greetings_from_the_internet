@@ -1,8 +1,8 @@
 "use strict";
 
 var express = require('express');
-var request = require('request');
-var request = require('path');
+// var request = require('request');
+// var path = require('path');
 var apiServerHost = process.env.apiServerHost;
 
 var app = express();
@@ -20,7 +20,7 @@ app.use('/img', express.static('css'));
 
 app.use('/', function(req, res) {
   var url = apiServerHost + req.url;
-  req.pipe(request(url)).pipe(res);
+  req.pipe(req(url)).pipe(res);
 });
 
 app.use('/s3', function(req, res) {

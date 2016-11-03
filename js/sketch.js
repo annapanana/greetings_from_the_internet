@@ -18,34 +18,34 @@ function preload() {
   backgroundImg = changeImageFormat(backgroundImg);
   // get search text
   var searchText = postCardObject.searchText;
+  composition = postcardsLayouts[formatText(text)];
+  console.log(text);
 
   text = removeNonLetters(text);
   var textObjects = [];
-  console.log(text);
-  $.ajax({
-    type: "GET",
-    url: "assets/svg_test.xml",
-    dataType: "xml",
-    success: function (xml) {
-      // Parse the xml file and get data
-      var svgData = xmlToJson(xml);
-      console.log(svgData);
-      textObjects = svgData["svg"]["text"];
-
-      // build the letter data object
+  // $.ajax({
+  //   type: "GET",
+  //   url: "assets/svg_test.xml",
+  //   dataType: "xml",
+  //   success: function (xml) {
+  //     // Parse the xml file and get data
+  //     var svgData = xmlToJson(xml);
+  //     console.log(svgData);
+  //     textObjects = svgData["svg"]["text"];
+  //
+  //     // build the letter data object
       composition.greeting = text;
       composition.customText = searchText;
-      composition.letters = getLetterData(textObjects);
+      // composition.letters = getLetterData(layoutData["letters"]);
       composition.backgroundImg = loadImage(backgroundImg);
       composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
 
-
       // Add the photo data to the letter object
-      for (let i = 0; i < composition["letters"].length; i++) {
+      for (let i = 0; i < composition.letters.length; i++) {
         var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
-        composition["letters"][i].img = loadImage(imageURL);
-        composition["letters"][i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
-        composition["letters"][i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
+        composition.letters[i].img = loadImage(imageURL);
+        composition.letters[i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
+        composition.letters[i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
       }
 
       // load all images
@@ -59,9 +59,9 @@ function preload() {
       //   console.log(data);
       // });
       initColorBlobs();
-    }
-  });
-  testImg = loadImage("img/kitten_01.jpg");
+    // }
+  // });
+  // testImg = loadImage("img/kitten_01.jpg");
 
   $("#color-palette").on("click", function(e) {
     updateColorSelection(e.target);
@@ -70,7 +70,8 @@ function preload() {
   $("#done_editing").on("click", function(e) {
     // var $uploadedPhoto = $.
     console.log("done editing");
-    addPhoto("postcards");
+    // addPhoto("postcards");
+    loadNewPage();
   });
 }
 
@@ -93,24 +94,25 @@ function setup() {
 
 function drawCard() {
   console.log("draw card");
+  console.log(composition);
   image(composition.backgroundImg, 0, 0, 600, 400);
   textSize(48);
   textFont(composition.customTextFont);
   textAlign(CENTER);
   fill(curColor.r, curColor.g, curColor.b);
-  text("greetings from "+composition.customText, 300, 320);
+  text("greetings from "+composition.customText, 300, composition.subtext_yVal);
 
-  for (let i = 0; i < composition["letters"].length; i++) {
-    var thisImage = composition["letters"][i];
+  for (let i = 0; i < composition.letters.length; i++) {
+    var thisImage = composition.letters[i];
     // Mask letter
-    thisImage.img.mask(composition["letters"][i]["imageMask"]);
+    thisImage.img.mask(composition.letters[i]["imageMask"]);
 
     // Draw Imag
-    image(thisImage.img, thisImage.x, thisImage.y, 150, 150);
+    image(thisImage.img, thisImage.x, thisImage.y, composition.scale, composition.scale);
 
     // Draw stroke according to tint color
     tint(curColor.r, curColor.g, curColor.b);
-    image(thisImage.imageStroke, thisImage.x, thisImage.y, 150, 150)
+    image(thisImage.imageStroke, thisImage.x, thisImage.y, composition.scale, composition.scale)
     noTint();
   }
 }
@@ -127,6 +129,7 @@ function updateColorSelection(target) {
 }
 
 function mouseClicked() {
+
   // saveCanvas('myCanvas', 'jpg');
   // $.ajax({
   //   type: "POST",
@@ -145,60 +148,59 @@ function mouseClicked() {
 
 
 function getLetterData(textObjects) {
-  var letters = [];
-  // Get the X and Y coordinates of each letter
-  for (var i = 0; i < textObjects.length; i++) {
-    console.log(textObjects[i]["#text"]);
-    // Is it a letter?
-    if (textObjects[i]["#text"].length === 1) {
-      var matrixStr = textObjects[i]["@attributes"]["transform"];
-      var matrixVals = matrixStr.split(" ");
-      var xCoord = Number(matrixVals[4]);
-      var yCoord = Number(matrixVals[5].slice(0, -1));
-
-      letters.push({letter: textObjects[i]["#text"], x: xCoord, y: yCoord});
-    }
-  }
-  return letters;
+  // var letters = [];
+  // // Get the X and Y coordinates of each letter
+  // for (var i = 0; i < textObjects.length; i++) {
+  //   console.log(textObjects[i]["#text"]);
+  //   // Is it a letter?
+  //   if (textObjects[i]["#text"].length === 1) {
+  //     var matrixStr = textObjects[i]["@attributes"]["transform"];
+  //     var matrixVals = matrixStr.split(" ");
+  //     var xCoord = Number(matrixVals[4]);
+  //     var yCoord = Number(matrixVals[5].slice(0, -1));
+  //
+  //     letters.push({letter: textObjects[i]["#text"], x: xCoord, y: yCoord});
+  //   }
+  // }
+  // return letters;
 }
 
 // Changes XML to JSON
 function xmlToJson(xml) {
-
-	// Create the return object
-	var obj = {};
-
-	if (xml.nodeType == 1) { // element
-		// do attributes
-		if (xml.attributes.length > 0) {
-		obj["@attributes"] = {};
-			for (var j = 0; j < xml.attributes.length; j++) {
-				var attribute = xml.attributes.item(j);
-				obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-			}
-		}
-	} else if (xml.nodeType == 3) { // text
-		obj = xml.nodeValue;
-	}
-
-	// do children
-	if (xml.hasChildNodes()) {
-		for(var i = 0; i < xml.childNodes.length; i++) {
-			var item = xml.childNodes.item(i);
-			var nodeName = item.nodeName;
-			if (typeof(obj[nodeName]) == "undefined") {
-				obj[nodeName] = xmlToJson(item);
-			} else {
-				if (typeof(obj[nodeName].push) == "undefined") {
-					var old = obj[nodeName];
-					obj[nodeName] = [];
-					obj[nodeName].push(old);
-				}
-				obj[nodeName].push(xmlToJson(item));
-			}
-		}
-	}
-	return obj;
+	// // Create the return object
+	// var obj = {};
+  //
+	// if (xml.nodeType == 1) { // element
+	// 	// do attributes
+	// 	if (xml.attributes.length > 0) {
+	// 	obj["@attributes"] = {};
+	// 		for (var j = 0; j < xml.attributes.length; j++) {
+	// 			var attribute = xml.attributes.item(j);
+	// 			obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+	// 		}
+	// 	}
+	// } else if (xml.nodeType == 3) { // text
+	// 	obj = xml.nodeValue;
+	// }
+  //
+	// // do children
+	// if (xml.hasChildNodes()) {
+	// 	for(var i = 0; i < xml.childNodes.length; i++) {
+	// 		var item = xml.childNodes.item(i);
+	// 		var nodeName = item.nodeName;
+	// 		if (typeof(obj[nodeName]) == "undefined") {
+	// 			obj[nodeName] = xmlToJson(item);
+	// 		} else {
+	// 			if (typeof(obj[nodeName].push) == "undefined") {
+	// 				var old = obj[nodeName];
+	// 				obj[nodeName] = [];
+	// 				obj[nodeName].push(old);
+	// 			}
+	// 			obj[nodeName].push(xmlToJson(item));
+	// 		}
+	// 	}
+	// }
+	// return obj;
 };
 
 function changeImageFormat(str) {
@@ -218,6 +220,17 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function loadNewPage() {
+  var myCanvas = $("#cardCanvas").children("canvas")[0];
+  // var ctx = myCanvas.getContext('2d');
+  // var img = new Image;
+  // img.onload = function(){
+  //   ctx.drawImage(img,0,0);
+  // };
+  localStorage.setItem("savedImage", JSON.stringify(myCanvas.toDataURL("img/png")));
+  // img.src = myCanvas.toDataURL("img/png");;
 }
 
 function addPhoto(albumName) {
@@ -245,6 +258,18 @@ function addPhoto(albumName) {
   });
 }
 
+function formatText(str) {
+  var newStr = ""
+  for (var i = 0; i < str.length; i++) {
+    if(str[i] === " ") {
+      newStr+= "_";
+    } else {
+      newStr+=str[i];
+    }
+  }
+  return newStr;
+}
+
 function removeNonLetters(str) {
   var newString = "";
   for (var i = 0; i < str.length; i++) {
@@ -253,3 +278,31 @@ function removeNonLetters(str) {
     }
   }  return newString;
 }
+
+var postcardsLayouts = {
+  HELLO: {
+    scale:150,
+    subtext_yVal:325,
+    letters: [{l:"h", x:10, y:100}, {l:"e", x:130, y:100}, {l:"l", x:230, y:100}, {l:"l", x:330, y:100}, {l:"o", x:440, y:100}]
+  },
+  GUTEN_TAG: {
+    scale:125,
+    subtext_yVal:340,
+    letters: [{l:"g", x:30, y:50}, {l:"u", x:135, y:50}, {l:"t", x:240, y:50}, {l:"e", x:340  , y:50}, {l:"n", x:430, y:50},{l:"t", x:135, y:180},{l:"a", x:240, y:180},{l:"g", x:340, y:180}]
+  },
+  HOWDY: {
+    scale:125,
+    subtext_yVal:345,
+    letters: [{l:"h", x:20, y:100}, {l:"o", x:130, y:100}, {l:"w", x:240, y:100}, {l:"d", x:365, y:100}, {l:"y", x:460, y:100}]
+  },
+  OH_HELLO: {
+    scale:90,
+    subtext_yVal:300,
+    letters: [{l:"o", x:30, y:135}, {l:"h", x:115, y:135}, {l:"h", x:230, y:135}, {l:"e", x:300, y:135}, {l:"l", x:360, y:135}, {l:"l", x:420, y:135},{l:"o", x:480, y:135}]
+  },
+  HEY_FRIEND: {
+    scale:150,
+    subtext_yVal:290,
+    letters: [{l:"h", x:10, y:110}, {l:"e", x:130, y:110}, {l:"l", x:230, y:110}, {l:"l", x:330, y:110}, {l:"o", x:440, y:110}]
+  }
+};

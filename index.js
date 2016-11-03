@@ -11,16 +11,17 @@ var app = express();
 //   next();
 // });
 
-app.use('/js', express.static('js'));
-app.use('/css', express.static('css'));
-app.use('/img', express.static('css'));
-app.use('/favicon.ico', express.static('favicon.ico'));
+// app.use('/js', express.static('js'));
+// app.use('/css', express.static('css'));
+// app.use('/img', express.static('css'));
+// app.use('/favicon.ico', express.static('favicon.ico'));
 // app.use('/libraries', express.static('libraries'));
 
 app.use('/', function(req, res) {
   // var url = apiServerHost + req.url;
-  var url = req.url;
-  req.pipe(request(url)).pipe(res);
+  // var url = req.url;
+  // req.pipe(request(url)).pipe(res);
+  res.send('Hello World!');
 });
 
 // app.use('/s3', function(req, res) {

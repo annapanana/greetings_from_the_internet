@@ -19,7 +19,7 @@ app.use('/fonts', express.static('fonts'));
 // app.use('/favicon.ico', express.static('favicon.ico'));
 app.use('/libraries', express.static('libraries'));
 
-app.use(express.static('*.html'));
+// app.use(express.static('*.html'));
 
 // app.use('/card-selection.html', function(req, res) {
 //   res.sendFile(path.join(__dirname + '/card-selection.html'));
@@ -35,6 +35,18 @@ app.use(express.static('*.html'));
 
 app.use('/card-selection.html', function(req, res) {
   res.sendFile(path.join(__dirname + '/card-selection.html'));
+});
+
+app.use('/search.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/search.html'));
+});
+
+app.use('/composition.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/composition.html'));
+});
+
+app.use('/message-composition.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/message-composition.html'));
 });
 
 app.use('/', function(req, res) {

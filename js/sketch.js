@@ -25,7 +25,7 @@ function preload() {
 
   $.ajax({
     type: "GET",
-    url: "assets/svg_test.xml",
+    url: "assets/postcard_01.xml",
     dataType: "xml",
     success: function (xml) {
       // Parse the xml file and get data

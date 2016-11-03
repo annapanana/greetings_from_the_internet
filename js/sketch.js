@@ -73,6 +73,12 @@ function preload() {
     // addPhoto("postcards");
     loadNewPage();
   });
+
+  $("#greetings-text").keyup(function(e) {
+    // Update greetings text and re-draw card
+    drawCard($('input').val());
+  })
+
 }
 
 function initColorBlobs() {
@@ -88,11 +94,11 @@ function setup() {
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
   background('#d3d3d3');
-  drawCard();
+  drawCard(composition.customText);
 }
 
 
-function drawCard() {
+function drawCard(customGreeting) {
   console.log("draw card");
   console.log(composition);
   image(composition.backgroundImg, 0, 0, 600, 400);
@@ -100,7 +106,7 @@ function drawCard() {
   textFont(composition.customTextFont);
   textAlign(CENTER);
   fill(curColor.r, curColor.g, curColor.b);
-  text("greetings from "+composition.customText, 300, composition.subtext_yVal);
+  text("Greetings from "+customGreeting, 300,  composition.subtext_yVal);
 
   for (let i = 0; i < composition.letters.length; i++) {
     var thisImage = composition.letters[i];

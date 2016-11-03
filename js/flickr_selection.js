@@ -36,36 +36,43 @@ function organizePhotoData(photos, searchText) {
   var photoCollection = {}; // This only holds the photo name and URL
   var photoData = {}; // A temporary object to hold ALL data from Flickr
 
-  // Fill image container with new search results
-  for (var i = 0; i < photos.length; i++) {
-    // Documentation for building this string https://www.flickr.com/services/api/misc.urls.html
-    var photoSource = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_' + photos[i].secret + '.jpg';
+  /* T-Flow's feeble attempt at a refactor
 
-    // Build an HTML photo element
-    var newPhoto = $('<img src="' + photoSource +  '" alt="' + photos[i].title +'" class="photo_option" name="'+ "p_" + photos[i].id + '">');
+  */
+  photos.map((photo) => {
+    var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=895b279df6ecc35b1e91b50a62dd8d4f&photo_id='+photo.id+'&format=json&nojsoncallback=1');
 
-    // Add this new photo to the temp object
-    var keyString = "p_" + photos[i].id;
-    photoData[keyString] = newPhoto;
+    $xhr.done(function(data) {
+      // Documentation for building this string https://www.flickr.com/services/api/misc.urls.html
+      // var photoSource = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_' + photos[i].secret + '.jpg';
+      var photoSource = data["sizes"]["size"][1]["source"];
+      // console.log(photoSource);
+      // Build an HTML photo element
+      var newPhoto = $('<img src="' + photoSource +  '" alt="' + photo.title +'" class="photo_option" name="'+ "p_" + photo.id + '">');
 
-    // Push only the SCR data for this key to the main photo collection object
-    photoCollection[keyString] = photoData[keyString][0].src;
-  }
+      // Add this new photo to the temp object
+      var keyString = "p_" + photo.id;
+      photoData[keyString] = newPhoto;
 
-  // initialize photo manager and pass it all of the photos pulled from flickr
-  photoManager = setPhotos(photoCollection, searchText);
-  // Add an event listener to each photo to see if the user will select it
-  $('.photo-option').on('click', function() {
-    photoManager.checkPhotoStatus(event.target);
+      // Push only the SCR data for this key to the main photo collection object
+      photoCollection[keyString] = photoData[keyString][0].src;
+
+      // initialize photo manager and pass it all of the photos pulled from flickr
+      photoManager = setPhotos(photoCollection, searchText);
+      // Add an event listener to each photo to see if the user will select it
+      $('.photo-option').on('click', function() {
+        photoManager.checkPhotoStatus(event.target);
+      });
+
+      $('#refresh_button').on('click', function() {
+        photoManager.refreshPhotos();
+      });
+
+      $('#done_button').on('click', function() {
+        photoManager.checkSubmit();
+      })
+    });
   });
-
-  $('#refresh_button').on('click', function() {
-    photoManager.refreshPhotos();
-  });
-
-  $('#done_button').on('click', function() {
-    photoManager.checkSubmit();
-  })
 }
 
 function setPhotos(allPhotos, text) {
@@ -89,7 +96,6 @@ function setPhotos(allPhotos, text) {
   console.log("num of letters " + numOfLetters);
   for (var i = 0; i < numOfLetters.length; i++) {
     // TODO reset text color on refresh
-    console.log(i);
     $("#greentings-text").children("a:nth-child("+(i+1)+")").css("color", "black");
   }
 

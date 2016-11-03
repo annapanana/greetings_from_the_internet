@@ -63,6 +63,7 @@ h6 {
 .color-blob {
   width: 75px;
   height: 75px;
+  margin: 20px;
   border-radius: 50%;
   border: solid 4px;
   border-color: #FFF;
@@ -73,6 +74,7 @@ h6 {
   margin: 5%;
   display: flex;
   flex-flow: row;
+  justify-content: flex-start;
   /*background-color: black;*/
 }
 
@@ -92,7 +94,7 @@ h6 {
 .custom-col-less {
   display: flex;
   flex-flow: column;
-  justify-content: space-around;
+  justify-content: flex-start;;
   padding-top: 20px;
   width: 40%;
   /*background-color: rgb(208, 208, 208);*/
@@ -125,4 +127,9 @@ h6 {
 
 a {
   color: black;
+}
+
+.greetings-bar {
+  padding-right: 10%;
+  padding-left: 10%;
 }

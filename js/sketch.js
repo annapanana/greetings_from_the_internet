@@ -7,7 +7,7 @@ var curColor = {r:"f", g:"f", b:"f"};
 // var p_images;
 // var p_strokes;
 
-// function preload() {
+function preload() {
 //
 //   var postCardObject = localStorage.getItem("postcardTemplate");
 //   postCardObject = JSON.parse(postCardObject);
@@ -72,7 +72,8 @@ var curColor = {r:"f", g:"f", b:"f"};
   //   console.log("done editing");
   //   addPhoto("postcards");
   // });
-// }
+  testImg = loadImage("img/kitten_01.jpg");
+}
 
 function initColorBlobs() {
 

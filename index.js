@@ -17,7 +17,9 @@ var app = express();
 // app.use('/favicon.ico', express.static('favicon.ico'));
 // app.use('/libraries', express.static('libraries'));
 
-app.use('/', express.static(path.join(__dirname, '/index.html')));
+app.use('/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 // app.use('/s3', function(req, res) {
 //   res.send('Hello World!');

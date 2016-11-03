@@ -63,15 +63,15 @@ function preload() {
   // });
   testImg = loadImage("img/kitten_01.jpg");
 
-  $("#color-palette").on("click", function(e) {
-    updateColorSelection(e.target);
-  });
-
-  $("#done_editing").on("click", function(e) {
-    // var $uploadedPhoto = $.
-    console.log("done editing");
-    addPhoto("postcards");
-  });
+  // $("#color-palette").on("click", function(e) {
+  //   updateColorSelection(e.target);
+  // });
+  //
+  // $("#done_editing").on("click", function(e) {
+  //   // var $uploadedPhoto = $.
+  //   console.log("done editing");
+  //   addPhoto("postcards");
+  // });
 }
 
 function initColorBlobs() {

@@ -33,6 +33,10 @@ app.use(express.static('*.html'));
 //   res.sendFile(path.join(__dirname + '/search.html'));
 // });
 
+app.use('/card-selection.html', function(req, res) {
+  res.sendFile(path.join(__dirname + '/card-selection.html'));
+});
+
 app.use('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
 });

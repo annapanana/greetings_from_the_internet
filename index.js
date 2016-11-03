@@ -19,7 +19,8 @@ app.use('/img', express.static('css'));
 // app.use('/libraries', express.static('libraries'));
 
 app.use('/', function(req, res) {
-  var url = apiServerHost + req.url;
+  // var url = apiServerHost + req.url;
+  var url = '/' + req.url;
   req.pipe(request(url)).pipe(res);
 });
 

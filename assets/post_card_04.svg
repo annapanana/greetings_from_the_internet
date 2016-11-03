@@ -11,8 +11,8 @@
 	.st5{clip-path:url(#SVGID_8_);}
 	.st6{clip-path:url(#SVGID_10_);}
 	.st7{clip-path:url(#SVGID_12_);}
-	.st8{display:none;clip-path:url(#SVGID_10_);enable-background:new    ;}
-	.st9{display:inline;fill:#020A2F;}
+	.st8{clip-path:url(#SVGID_10_);enable-background:new    ;}
+	.st9{fill:#020A2F;}
 	.st10{font-family:'Yellowtail';}
 	.st11{font-size:51.6225px;}
 	.st12{font-family:'DayPosterBlack';}

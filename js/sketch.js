@@ -6,8 +6,6 @@ var curColor = {r:"0", g:"0", b:"0"};
 var curGreeting = "";
 
 function preload() {
-  // check layout for custom arrangement due to canvas
-
   var postCardObject = localStorage.getItem("postcardTemplate");
   postCardObject = JSON.parse(postCardObject);
   // get the greetings text
@@ -62,6 +60,8 @@ function initColorBlobs() {
 }
 
 function setup() {
+
+  $("#banner").fadeIn( "slow");
   // createCanvas(1875, 1275);
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
@@ -70,26 +70,26 @@ function setup() {
   drawCard();
 
   // Small screen hack
-  if(screen.width < 768) {
-    var col1 = $(".custom-col-more");
-    var col2 = $(".custom-col-less");
-
-    col1.removeClass("custom-col-more");
-    col2.removeClass("custom-col-less");
-    var newClasses = "col s12 center";
-    col1.addClass(newClasses);
-    col2.addClass(newClasses);
-
-    var newRow1 = '<div id="row1" class="row"></div>';
-    var newRow2 = '<div id="row2" class="row"></div>';
-    $(".custom-container").append(newRow1);
-    $(".custom-container").append(newRow2);
-
-    $("#row1").append(col1);
-    $("#row2").append(col2);
-
-    $(".custom-container").removeClass("custom-container").addClass("container");
-  }
+  // if(screen.width < 768) {
+  //   var col1 = $(".custom-col-more");
+  //   var col2 = $(".custom-col-less");
+  //
+  //   col1.removeClass("custom-col-more");
+  //   col2.removeClass("custom-col-less");
+  //   var newClasses = "col s12 center";
+  //   col1.addClass(newClasses);
+  //   col2.addClass(newClasses);
+  //
+  //   var newRow1 = '<div id="row1" class="row"></div>';
+  //   var newRow2 = '<div id="row2" class="row"></div>';
+  //   $(".custom-container").append(newRow1);
+  //   $(".custom-container").append(newRow2);
+  //
+  //   $("#row1").append(col1);
+  //   $("#row2").append(col2);
+  //
+  //   $(".custom-container").removeClass("custom-container").addClass("container");
+  // }
 }
 
 function drawCard() {

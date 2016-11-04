@@ -2,7 +2,7 @@
 
 function setup() {
   console.log("setting up");
-
+  $("#banner").fadeIn( "slow");
   var cnvFront = createCanvas(450, 300);
   cnvFront.parent("canvasFront");
   background('#FFF');

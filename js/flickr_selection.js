@@ -6,6 +6,7 @@ var currentPhotoCount = 0;
 var selectedPhotos = [];
 
 $(function() {
+  $("#banner").fadeIn( "slow");
   $("#info-box").hide();
   var cardObject = localStorage.getItem("postcardTemplate");
   cardObject = JSON.parse(cardObject);

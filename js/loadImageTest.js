@@ -15,8 +15,8 @@ function setup() {
     ctx.drawImage(img,0,0, 450, 300);
   };
   img.src = JSON.parse(localStorage.getItem("savedImage"));
-  // pg.background(100);
-  // pg.noStroke();
-  // pg.ellipse(pg.width/2, pg.height/2, 50, 50);
-  // image(pg, 50, 50);
+}
+
+function mouseClicked() {
+  // saveCanvas('myCanvas', 'jpg');
 }

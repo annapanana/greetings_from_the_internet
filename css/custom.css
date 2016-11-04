@@ -103,7 +103,6 @@ h6 {
 }
 
 .info-text-container {
-
   position: fixed !important;
   right: 0;
   margin-top: 200px;
@@ -129,4 +128,18 @@ h6 {
 
 a {
   color: black;
+}
+
+.custom-background-image {
+  position: fixed;
+  top: 100px;
+}
+
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 500px;
+  height: 500px;
 }

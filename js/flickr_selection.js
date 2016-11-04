@@ -2,6 +2,8 @@
 
 var photoManager;
 var messageText = "";
+var currentPhotoCount = 0;
+var selectedPhotos = [];
 
 $(function() {
   $("#info-box").hide();
@@ -52,92 +54,58 @@ function organizePhotoData(photos, searchText) {
   var photoCollection = {}; // This only holds the photo name and URL
   var photoData = {}; // A temporary object to hold ALL data from Flickr
 
-  /* T-Flow's feeble attempt at a refactor
+  var photosList = [];
+  for (var i = 0; i < photos.length; i++) {
+    photosList.push($.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=895b279df6ecc35b1e91b50a62dd8d4f&photo_id='+photos[i].id+'&format=json&nojsoncallback=1'));
+  }
 
-  */
-  photos.map((photo) => {
-    var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=895b279df6ecc35b1e91b50a62dd8d4f&photo_id='+photo.id+'&format=json&nojsoncallback=1');
-
-    $xhr.done(function(data) {
+  Promise.all(photosList).then(function (data) {
+    for (var i = 0; i < photos.length; i++) {
       // Documentation for building this string https://www.flickr.com/services/api/misc.urls.html
-      // var photoSource = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_' + photos[i].secret + '.jpg';
-      var photoSource = data["sizes"]["size"][1]["source"];
-      // console.log(photoSource);
+      var photoSource = data[i]["sizes"]["size"][1]["source"];
       // Build an HTML photo element
-      var newPhoto = $('<img src="' + photoSource +  '" alt="' + photo.title +'" class="photo_option" name="'+ "p_" + photo.id + '">');
+      var newPhoto = $('<img src="' + photoSource +  '" alt="' + photos[i].title +'" class="photo_option" name="'+ "p_" + photos[i].id + '">');
 
       // Add this new photo to the temp object
-      var keyString = "p_" + photo.id;
+      var keyString = "p_" + photos[i].id;
       photoData[keyString] = newPhoto;
 
       // Push only the SCR data for this key to the main photo collection object
       photoCollection[keyString] = photoData[keyString][0].src;
+    }
 
-      // initialize photo manager and pass it all of the photos pulled from flickr
-      photoManager = setPhotos(photoCollection, searchText);
-      // Add an event listener to each photo to see if the user will select it
-      $('.photo-option').on('click', function() {
-        photoManager.checkPhotoStatus(event.target);
-      });
+    // GETS CALLED ONCE ON CALLBACK
+    // initialize photo manager and pass it all of the photos pulled from flickr
+    photoManager = setPhotos(photoCollection, searchText);
 
-      $('#refresh_button').on('click', function() {
-        photoManager.refreshPhotos();
-      });
-
-      $('#done_button').on('click', function() {
-        photoManager.checkSubmit();
-      })
+    // Add an event listener to each photo to see if the user will select it
+    $('.photo-option').on('click', function() {
+      photoManager.checkPhotoStatus(event.target);
     });
+    //custom animation on images
+    $(".photo-option").mouseenter(function() {
+      TweenMax.to($(this), .2, {css:{scaleX:1.1, scaleY:1.1}});
+    });
+    $(".photo-option").mouseleave(function() {
+      TweenMax.to($(this), .2, {css:{scaleX:1, scaleY:1}});
+    });
+  })
+
+  $('#refresh_button').on('click', function() {
+    photoManager.refreshPhotos();
   });
-  // console.log(photos);
-  // Fill image container with new search results
-  // for (var i = 0; i < photos.length; i++) {
-  //   // Get a refernece to the square photo
-  //   var $xhr = $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=895b279df6ecc35b1e91b50a62dd8d4f&photo_id='+photos[i].id+'&format=json&nojsoncallback=1');
-  //
-  //   $xhr.done(function(data) {
-  //     console.log(photos);
-  //     // Documentation for building this string https://www.flickr.com/services/api/misc.urls.html
-  //     // var photoSource = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_' + photos[i].secret + '.jpg';
-  //     var photoSource = data["sizes"]["size"][1]["source"];
-  //     // console.log(photoSource);
-  //     console.log(photos[i]);
-  //     //BUG - lost referene to the photos object when I put this in a new ajax call
-  //     // Build an HTML photo element
-  //     var newPhoto = $('<img src="' + photoSource +  '" alt="' + photos[i].title +'" class="photo_option" name="'+ "p_" + photos[i].id + '">');
-  //
-  //     // Add this new photo to the temp object
-  //     var keyString = "p_" + photos[i].id;
-  //     photoData[keyString] = newPhoto;
-  //
-  //     // Push only the SCR data for this key to the main photo collection object
-  //     photoCollection[keyString] = photoData[keyString][0].src;
-  //
-  //     // initialize photo manager and pass it all of the photos pulled from flickr
-  //     photoManager = setPhotos(photoCollection, searchText);
-  //     // Add an event listener to each photo to see if the user will select it
-  //     $('.photo-option').on('click', function() {
-  //       photoManager.checkPhotoStatus(event.target);
-  //     });
-  //
-  //     $('#refresh_button').on('click', function() {
-  //       photoManager.refreshPhotos();
-  //     });
-  //
-  //     $('#done_button').on('click', function() {
-  //       photoManager.checkSubmit();
-  //     })
-  //   });
-  // }
+
+  $('#done_button').on('click', function() {
+    photoManager.checkSubmit();
+  })
+
 }
 
 function setPhotos(allPhotos, text) {
-  var selectedPhotos = [];
-  var currentPhotoCount = 0;
   var photoCollection = allPhotos;
   var numOfLetters = 0;
   var currentPage = 1;
-
+  console.log("in set photos " + currentPhotoCount);
   // Visually organize photo
   photoLayout(allPhotos);
 
@@ -149,19 +117,15 @@ function setPhotos(allPhotos, text) {
   headerManager.updateHeaderText(selectedPhotos.length);
 
   // Reset greeting text in info box
-  console.log("num of letters " + numOfLetters);
   for (var i = 0; i < numOfLetters.length; i++) {
-    // TODO reset text color on refresh
     $("#greentings-text").children("a:nth-child("+(i+1)+")").css("color", "black");
   }
 
   return {
     // Add a photo to the collection
     addPhoto: function(selection) {
-      // TODO Check if we have enough photos
       // Get the name of the target element to reference in the main photo collection object
       var keyOfSelected = $(selection).attr("name"); // this is p_[image ID from flickr]
-      console.log("adding photo " + keyOfSelected);
       selectedPhotos.push(keyOfSelected);
       // change the state of the photo
       $(selection).toggleClass("selected-photo");
@@ -171,14 +135,12 @@ function setPhotos(allPhotos, text) {
     // Remove a photo from the collection
     removePhoto: function(selection) {
       var keyOfSelected = $(selection).attr("name"); // this is p_[image ID from flickr]
-      console.log("removing photo " + keyOfSelected);
       var index = selectedPhotos.indexOf(keyOfSelected);
       selectedPhotos.splice(index, 1);
       // Change the state of the photo
       $(selection).toggleClass("selected-photo");
       headerManager.updateHeaderText(selectedPhotos.length);
       currentPhotoCount--;
-      // TODO if the user removes photos, disable the done button
     },
     // Check to see if the user has selected enough photos
     submitPhotos: function() {
@@ -192,7 +154,7 @@ function setPhotos(allPhotos, text) {
       }
     },
     checkPhotoStatus: function(selection) {
-
+      // BUG if the queue is full, the user wont be able to remove images because this first condition will return true
       if (currentPhotoCount === numOfLetters) {
         // enable submit button
         $("#done_button").removeClass("disabled");
@@ -245,12 +207,14 @@ function headerData() {
       return letterCount - numOfSelectedPhotos;
     },
     updateHeaderText: function(numOfSelectedPhotos) {
+      console.log("update header text");
       $("#photo-count-text").text("Select "+ (letterCount - numOfSelectedPhotos) + " more photos");
       // Update color of greeting text as user selects more photos
       // Account for words with spaces / child num is defined at the top of func
       if (messageText[numOfSelectedPhotos-1] === " ") {
         childNum = 1;
       }
+      console.log(numOfSelectedPhotos);
       $("#greentings-text").children("a:nth-child("+(numOfSelectedPhotos+childNum)+")").css("color", "red");
     },
    };

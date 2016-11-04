@@ -11,7 +11,7 @@ $(document).ready(function(){
   });
 
   $(".card-thumb").mouseenter(function() {
-    TweenMax.to($(this), .2, {css:{scaleX:1.2, scaleY:1.2}});
+    TweenMax.to($(this), .2, {css:{scaleX:1.1, scaleY:1.1}});
   });
   $(".card-thumb").mouseleave(function() {
     TweenMax.to($(this), .2, {css:{scaleX:1, scaleY:1}});

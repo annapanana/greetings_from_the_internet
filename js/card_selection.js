@@ -1,7 +1,7 @@
 "use strict";
 
 $(document).ready(function(){
-  $("#banner").fadeIn( "slow");
+  // $("#banner").fadeIn( "slow");
   $(".card-thumb").on("click", function() {
     updateGallery(event.target)
   });

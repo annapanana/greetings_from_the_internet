@@ -145,7 +145,7 @@ a {
 }
 
 .banner-sm {
-  display: none;
+  /*display: none;*/
   position: absolute;
   top: 25px;
   left: 0;

@@ -137,9 +137,18 @@ a {
 
 .banner {
   position: absolute;
-  top: 0;
+  top: 15px;
   left: 0;
   z-index: 3;
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
+}
+
+.banner-sm {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  z-index: 3;
+  width: 300px;
+  height: 300px;
 }

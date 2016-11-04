@@ -5,7 +5,7 @@ function setup() {
 
   var cnvFront = createCanvas(450, 300);
   cnvFront.parent("canvasFront");
-  background('#d3d3d3');
+  background('#FFF');
   // pg = createGraphics(100, 100);
 
   var myCanvas = $("#canvasFront").children("canvas")[0];

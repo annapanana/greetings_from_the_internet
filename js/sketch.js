@@ -65,7 +65,7 @@ function setup() {
   // createCanvas(1875, 1275);
   var cnv = createCanvas(600, 400);
   cnv.parent("cardCanvas");
-  background('#d3d3d3');
+  background('#FFF');
   curGreeting = "Greetings from "+ composition.customText;
   drawCard();
 

@@ -1,7 +1,6 @@
 # greetings_from_the_internet
 Galvanize Q1 Project
 
-Greetings from the Internet
 Deployed Project Link: http://greetingsfromtheinternet.surge.sh/
 
 Project Brief:

@@ -2,6 +2,7 @@
 Galvanize Q1 Project
 
 Greetings from the Internet
+Deployed Project Link: http://greetingsfromtheinternet.surge.sh/
 
 Project Brief:
 Greetings from the Internet (gfti) is a postcard making tool that allows users to search for an image, modify a greetings graphic and include a custom message. The aesthetic of gfti is an homage to Teich greetings postcards, which made their debut at the 1893 World’s Columbian Exposition in Chicago.

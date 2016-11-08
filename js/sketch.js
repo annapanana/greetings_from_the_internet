@@ -24,14 +24,14 @@ function preload() {
   composition.greeting = text;
   composition.customText = searchText;
   composition.backgroundImg = loadImage(backgroundImg);
-  composition.customTextFont = loadFont("assets/fonts/Yellowtail-Regular.otf");
+  composition.customTextFont = loadFont("../fonts/Yellowtail-Regular.otf");
 
   // Add the photo data to the letter object
   for (let i = 0; i < composition.letters.length; i++) {
     var imageURL = JSON.parse(localStorage.getItem("image_selection"+i));
     composition.letters[i].img = loadImage(imageURL);
-    composition.letters[i].imageMask = loadImage("assets/letters/"+text[i]+".svg");
-    composition.letters[i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.svg");
+    composition.letters[i].imageMask = loadImage("assets/letters/"+text[i]+".png");
+    composition.letters[i].imageStroke = loadImage("assets/letters/"+text[i]+"_stroke.png");
   }
 
   $("#color-palette").on("click", function(e) {
